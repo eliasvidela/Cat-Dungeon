@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dungeon Cats · Party Dungeon</title><style>
+:root{--bg:#0e1520;--panel:#192635;--panel2:#223346;--line:#425267;--cream:#f5e8c7;--muted:#a5b7c5;--gold:#e9bd65;--red:#f47779;--green:#7ed5a2;--blue:#81bfe8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#273748,#0b111a 75%);font-family:system-ui,Segoe UI,sans-serif;color:var(--cream);min-height:100vh}button,select{font:inherit}button{cursor:pointer;border:1px solid #65758a;background:#304459;color:#fff2d7;border-radius:9px;padding:10px 14px;font-weight:700}button:hover:not(:disabled){background:#45627a}button:disabled{opacity:.38;cursor:not-allowed}.primary{background:#a56c34;border-color:#e9bd65}.primary:hover:not(:disabled){background:#bf8244}.danger{background:#773d43}.wrap{max-width:1480px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,43px);margin:0;letter-spacing:1px}h1 span{color:var(--gold)}h2{margin:0 0 12px;font-family:Georgia,serif}h3{margin:0 0 8px}.sub,.muted{color:var(--muted)}.sub{font-size:13px}.panel{background:linear-gradient(145deg,#1e2c3b,#14202d);border:1px solid #46546a;border-radius:14px;padding:16px;box-shadow:0 12px 28px #0004}.layout{display:block;margin-top:16px}.expedition{min-height:65vh}.cards{justify-content:center}.expedition .cards{min-height:380px;align-items:flex-start;padding:25px 12px;background:radial-gradient(ellipse at center,#263b4a 0%,#14212e 80%);border:1px dashed #53687a;border-radius:16px}.expedition .card{width:145px;min-height:205px}.expedition .card .icon{font-size:49px}.expedition .card .name{font-size:14px}.expedition .card .skill{font-size:12px}.expedition .stats{justify-content:center}.expedition .actions{justify-content:center}.market{max-height:55vh}.dialog.market-dialog{width:min(1100px,96vw);max-height:92vh;overflow:auto}.market-dialog .market{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.market-dialog .card{width:100%}.turn-note{text-align:center;color:#c4d3df;margin:12px 0}.curse-tag{border:1px solid #b68bd6;color:#e0b5ff;border-radius:18px;padding:5px 12px;font-size:12px}.market-info{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.market-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.market-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.market-tabs button.selected{background:#91663a;border-color:#edc777}.players{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.player{border:1px solid #526276;background:#1c2a38;border-radius:10px;padding:9px 13px;min-width:165px}.player.active{border-color:var(--gold);box-shadow:0 0 0 1px #e9bd6577}.player strong{display:block}.stats{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0}.stat{background:#101a25;border:1px solid #39495a;padding:9px 12px;border-radius:9px}.stat b{font-size:21px;color:var(--gold)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.cards{display:flex;gap:10px;flex-wrap:wrap;align-content:flex-start;min-height:172px}.card{position:relative;width:119px;min-height:170px;background:linear-gradient(155deg,#3a5060,#182431);border:2px solid #9aa8b1;border-radius:10px;padding:9px 8px;display:flex;flex-direction:column;gap:6px;box-shadow:3px 5px 0 #090e16}.card.enemy{border-color:#d36c6e;background:linear-gradient(155deg,#64373d,#231d28)}.card .icon{font-size:36px;text-align:center;line-height:1.3}.card .name{font-size:12px;font-weight:900;text-align:center;min-height:32px}.card .value{display:flex;justify-content:space-around;color:#ffe6a0;font-size:12px;font-weight:700}.card .skill{font-size:10px;color:#dce7eb;line-height:1.25;flex:1}.card .type{font-size:9px;text-align:center;text-transform:uppercase;letter-spacing:1px;color:#b8d2df}.card.dim{opacity:.35;filter:grayscale(1)}.card.bonus{border-color:#e6c46b}.market{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;max-height:680px;overflow:auto;padding:5px}.market-item{border:1px solid #526176;border-radius:11px;padding:9px;background:#1b2a39}.market-item .card{width:100%;min-height:157px;box-shadow:none}.market-item .buy{width:100%;margin-top:9px;font-size:12px;padding:7px}.market-item .price{color:var(--gold);font-weight:800;font-size:12px;margin-top:7px;text-align:center}.feed{max-height:205px;overflow:auto;font-size:12px;line-height:1.55}.feed div{padding:5px 0;border-bottom:1px solid #ffffff14}.badge{display:inline-block;border:1px solid #687b8e;border-radius:20px;padding:4px 9px;font-size:12px}.meter{height:9px;background:#0e1821;border-radius:20px;overflow:hidden;margin-top:7px}.meter div{height:100%;background:linear-gradient(90deg,#62bb96,#e9bd65)}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.hidden{display:none!important}.overlay{position:fixed;inset:0;background:#080e17de;display:flex;align-items:center;justify-content:center;z-index:9;padding:20px}.dialog{width:min(600px,100%);background:#1a2a3b;border:1px solid #bba16e;border-radius:18px;padding:25px;box-shadow:0 20px 90px #000}.dialog p{color:#d5dfe4}.dialog select{background:#101c2a;color:white;padding:10px;border:1px solid #62758a;border-radius:8px;width:100%;margin:10px 0}.foot{font-size:12px;color:#99a9b5;margin:20px 0}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}@media(max-width:850px){.layout{grid-template-columns:1fr}.wrap{padding:12px}.card{width:105px;min-height:160px}.market{max-height:500px}}@media(max-width:450px){.card{width:calc(33.33% - 7px);min-height:160px}.market{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.expedition .card{height:242px;min-height:242px;max-height:242px;flex:0 0 145px;overflow:hidden}.expedition .card .skill{flex:1;min-height:58px;overflow:auto}.market-item .card{height:198px;min-height:198px;max-height:198px;overflow:hidden}.market-item .card .skill{min-height:54px;overflow:auto}.card .name{min-height:35px}.card .skill{display:block;flex:1}.outcome-dialog{max-width:550px;text-align:center;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 0%,#33485b,#172331 65%);border:2px solid #bda67b}.outcome-dialog.failure{border-color:#e4787a;background:radial-gradient(circle at 50% 0%,#513039,#18202b 65%)}.outcome-icon{font-size:66px;animation:outcomePop .65s cubic-bezier(.18,1.4,.36,1) both}.outcome-eyebrow{font-size:11px;letter-spacing:3px;color:#c4a87b;margin:10px 0}.outcome-dialog h2{font-size:clamp(25px,4vw,37px);margin:8px 0}.reward-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0 16px}.reward{border:1px solid #6b7784;border-radius:14px;background:#101c29;padding:16px 10px}.reward small{font-size:10px;letter-spacing:1px;color:#c5cbd1}.reward strong{display:block;font-size:clamp(30px,5vw,48px);margin-top:7px;font-variant-numeric:tabular-nums}.gold-reward strong{color:#efc56d}.xp-reward strong{color:#94d9ff}.outcome-total{color:#d3dfec;font-size:13px;margin-bottom:15px}.outcome-actions{justify-content:center}.outcome-actions button{flex:1;min-width:170px}.reward{animation:riseIn .65s ease both}.xp-reward{animation-delay:.15s}@keyframes riseIn{from{opacity:0;transform:translateY(35px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes outcomePop{0%{opacity:0;transform:scale(.45) rotate(-10deg)}65%{transform:scale(1.16)}100%{opacity:1;transform:scale(1)}}@media(max-width:550px){.expedition .card{flex-basis:calc(50% - 8px);width:calc(50% - 8px);height:232px;min-height:232px}.reward-grid{gap:8px}.outcome-actions{flex-direction:column}.outcome-actions button{width:100%}}@media(prefers-reduced-motion:reduce){.outcome-icon,.reward{animation:none!important}}
+.player-picker{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:30px auto 24px}.player-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;width:155px;min-height:128px;border:2px solid #53687a;background:linear-gradient(145deg,#243749,#142331);border-radius:17px;color:#e7edf3;transition:transform .18s,border-color .18s,box-shadow .18s}.player-choice:hover{transform:translateY(-4px)}.player-choice.selected{border-color:#e7be77;box-shadow:0 0 0 2px rgba(231,190,119,.15),0 9px 26px rgba(0,0,0,.3);background:linear-gradient(145deg,#46503f,#20303b)}.player-choice-icon{font-size:25px;white-space:nowrap;letter-spacing:-7px;padding-right:8px}.player-choice span:last-child{font-size:14px;font-weight:800}.players-bottom{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.players-bottom .player{min-width:0}#startScreen{text-align:center;padding:40px 12px}#startScreen>p{max-width:600px;margin:0 auto}#startScreen>.primary{padding:15px 34px;font-size:16px}.outcome-dialog.failure .xp-reward strong{color:#ff8b91}@media(max-width:550px){.player-choice{width:calc(33.333% - 12px);min-height:112px}.player-choice-icon{font-size:18px;letter-spacing:-6px}.player-choice span:last-child{font-size:11px}} 
+
+/* Party Dungeon — fantasy tabletop visual system */
+:root{--bg:#0b1018;--panel:#17212e;--panel2:#1f3040;--line:#4b5d68;--cream:#f6e9c8;--muted:#afbbc3;--gold:#eec777;--red:#eb8b82;--green:#91d7b7}
+body{background:radial-gradient(ellipse 70% 60% at 50% 4%,#2a3e45 0%,transparent 70%),repeating-linear-gradient(125deg,#101a24 0,#101a24 2px,#111b26 3px,#111b26 8px);color:#f6e9cf}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;background:repeating-linear-gradient(90deg,transparent 0 63px,#b6c1a8 64px 65px,transparent 66px 129px);z-index:-1}
+.wrap{max-width:1600px;padding:24px 30px}
+.top{border-bottom:1px solid #8d7955;padding:6px 4px 20px}
+.top h1{font-size:clamp(35px,5vw,58px);letter-spacing:3px;text-shadow:0 3px 14px #0009}
+.top h1 span{color:#f4c978}
+.top .sub{letter-spacing:3px;color:#c9b58f;font-size:11px;margin-top:4px}
+.panel{background:linear-gradient(135deg,#1c2b36ee,#0f1a27f5);border:1px solid #897652;box-shadow:inset 0 0 0 3px #121c27,0 18px 48px #0009}
+.expedition{padding:22px 25px;min-height:68vh}
+.sectionhead h2{font-size:28px;color:#f6ddb0}
+.sectionhead h3{color:#ead2a8;font-size:19px}
+.badge{background:#1b2b37;border-color:#7e7057;color:#f0d8ac}
+.stat{background:linear-gradient(140deg,#243743,#15212c);border:1px solid #796c57;min-width:155px;text-align:center;box-shadow:inset 0 1px #ffffff0a}
+.stat b{display:block;font-size:27px;margin-top:5px}
+.expedition .stats{justify-content:center;gap:12px}
+.expedition .cards{position:relative;min-height:410px;gap:17px;padding:28px 15px 35px;background:radial-gradient(ellipse at 50% 25%,#314549 0%,#172b31 48%,#0d1b26 100%);border:1px solid #7a6d55;border-radius:18px;box-shadow:inset 0 0 60px #0008,inset 0 0 0 6px #ffffff05}
+.expedition .cards:before{content:"✦  D U N G E O N   C A T S  ✦";position:absolute;bottom:8px;left:0;right:0;text-align:center;letter-spacing:6px;font-size:10px;color:#a5a88e60;pointer-events:none}
+.card,.expedition .card,.market-item .card{width:156px;height:263px;min-height:263px;max-height:263px;flex:0 0 156px;border:2px solid var(--card-accent,#89c5b0);border-radius:13px;padding:6px;gap:0;background:linear-gradient(145deg,#384e56,#162b33 60%,#0d1b26);box-shadow:0 6px 0 #070d12,0 12px 22px #0008,inset 0 0 0 2px #0c1921;overflow:hidden;transition:transform .2s,box-shadow .2s;animation:dealIn .28s ease-out both}
+.card:hover{transform:translateY(-8px) rotate(-1deg);box-shadow:0 14px 0 #070d12,0 24px 30px #0009;z-index:2}
+.card.enemy{background:linear-gradient(145deg,#593d47,#30202d 65%,#171923)}
+.card.undead{background:linear-gradient(145deg,#514a6c,#29253f 65%,#181923)}
+.card.dim{opacity:.45;filter:grayscale(.85)}
+.card.bonus{border-color:#f4d787}
+.card-top{display:flex;justify-content:space-between;align-items:center;padding:3px 6px 5px;color:#f4e9d4;font-size:9px;font-weight:900;letter-spacing:1.5px;min-height:19px}
+.card-star{color:var(--card-accent);font-size:14px}
+.card-art{height:99px;position:relative;border:1px solid #b3a37a99;border-radius:7px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,#62787a 0%,#324b55 43%,#1a303a 85%);display:flex;align-items:center;justify-content:center}
+.enemy .card-art{background:radial-gradient(ellipse at 50% 55%,#b47d71,#664550 45%,#302333 92%)}
+.undead .card-art{background:radial-gradient(ellipse at 50% 55%,#8887b0,#555077 45%,#28273c 92%)}
+.art-halo{position:absolute;width:83px;height:83px;border:1px solid #e3d6b680;border-radius:50%;box-shadow:0 0 25px #f0d7a02c,inset 0 0 18px #e8d6ac29}
+.art-halo:after{content:"";position:absolute;inset:9px;border:1px dashed #e3d6b64d;border-radius:50%}
+.art-runes{position:absolute;top:5px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:9px;color:#e7dab1a8}
+.art-character{position:relative;z-index:1;font-size:62px;line-height:1;filter:drop-shadow(0 7px 5px #0008);transform:rotate(-5deg)}
+.art-ground{position:absolute;bottom:-15px;width:105px;height:35px;border-radius:50%;background:#08161e8c;filter:blur(7px)}
+.card-name{font-family:Georgia,serif;font-weight:900;font-size:14px;line-height:1.06;color:#fff0d5;text-align:center;display:flex;align-items:center;justify-content:center;height:35px;min-height:35px;padding:2px}
+.card-type{text-align:center;font-size:8px;letter-spacing:1.1px;font-weight:800;color:var(--card-accent);height:13px}
+.card-value{display:flex;justify-content:center;gap:6px;margin:2px 0 5px}
+.card-value span{font-size:12px;min-width:52px;text-align:center;background:#07151fd9;border:1px solid #8e815e;border-radius:6px;padding:3px 4px;color:#f8d990}
+.card-value span:last-child{color:#b8dafa;border-color:#617d98}
+.card-skill{height:45px;min-height:45px;max-height:45px;overflow:auto;background:#e9ddbc;color:#3b3540;font-size:10px;line-height:1.24;font-weight:650;padding:5px 6px;border-radius:5px;border:1px solid #a08e68;text-align:center;scrollbar-width:thin;flex:1}
+.card-foot{height:13px;display:flex;justify-content:space-between;align-items:center;color:#b4a98b;font-size:7px;letter-spacing:1px;padding:2px 5px}
+.market-item{background:linear-gradient(160deg,#263a43,#14232e);border-color:#7d735e;transition:border-color .2s,transform .2s}
+.market-item:hover{border-color:#e9c886;transform:translateY(-2px)}
+.market-item .card{width:100%;height:263px;min-height:263px;max-height:263px;box-shadow:none;flex:auto}
+.market-dialog .market{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.market-item .price{font-size:14px;margin-top:10px}
+.market-item .buy{padding:10px;background:#855f3c;border-color:#c9a16d}
+.market-dialog{background:linear-gradient(140deg,#253541,#121d29);border:2px solid #ad9569}
+.market-header h2{font-size:28px}
+button{border-color:#857253;background:linear-gradient(#374b56,#21333f);box-shadow:inset 0 1px #ffffff1b,0 3px 0 #0a141b}
+button:hover:not(:disabled){filter:brightness(1.14)}
+button.primary{background:linear-gradient(#c18a48,#8b572d);border-color:#f4c47a;color:#fff7e3}
+.actions button{padding:13px 20px}
+.player{background:linear-gradient(145deg,#263743,#131f2b);border-color:#736c5e;padding:15px 18px}
+.player.active{border-color:#f3c577;background:linear-gradient(145deg,#354a48,#172c30);box-shadow:0 0 0 2px #d7b97a66,0 9px 22px #0005}
+.player strong{font-family:Georgia,serif;font-size:18px;margin-bottom:8px}
+.player small{color:#ead5ac}
+.player .meter{height:11px;border:1px solid #786d53}
+.outcome-dialog{background:radial-gradient(ellipse at 50% 0%,#445c55,#192a32 60%,#101a25);border:2px solid #e2bf7d;box-shadow:0 25px 100px #000d,inset 0 0 0 5px #ffffff0a}
+.outcome-dialog.failure{background:radial-gradient(ellipse at 50% 0%,#693f49,#281e2c 60%,#151822)}
+.outcome-dialog h2{font-family:Georgia,serif}
+.reward{background:linear-gradient(150deg,#253943,#101d28);border-color:#907f5c}
+.player-choice{border-color:#85765c}
+.player-choice.selected{border-color:#f5ce83}
+@keyframes dealIn{from{opacity:0;transform:translateY(20px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:550px){.wrap{padding:10px}.expedition{padding:12px}.expedition .cards{gap:9px;padding:18px 8px 30px}.expedition .card{flex:0 0 calc(50% - 6px);width:calc(50% - 6px);height:263px;min-height:263px}.stat{min-width:calc(50% - 7px)}.market-dialog .market{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.market-item{padding:5px}.market-item .card{height:263px;min-height:263px}}
+@media(prefers-reduced-motion:reduce){.card{animation:none;transition:none}}
+
+.gold-coin{display:inline-flex!important;align-items:center;justify-content:center;width:16px!important;min-width:16px!important;height:16px;border-radius:50%!important;border:2px solid #fff0ae!important;background:radial-gradient(circle at 30% 20%,#fff3aa,#e8a83d 64%,#9c5b23)!important;box-shadow:inset 0 0 0 1px #b77425,0 1px 4px #0007;color:#754117!important;font:bold 10px Georgia,serif!important;padding:0!important;vertical-align:middle;line-height:1!important;font-style:normal!important}
+.card .art-character{transform-origin:50% 80%;animation:catBreath 3.6s ease-in-out infinite;will-change:transform}
+.market-item .art-character{animation-duration:4.7s}
+.expedition .card.deal-new{animation:cardEntrance .54s cubic-bezier(.17,1.1,.31,1) both}
+@keyframes catBreath{0%,100%{transform:rotate(-5deg) translateY(0) scale(1)}25%{transform:rotate(-2deg) translateY(-2px) scale(1.025)}50%{transform:rotate(2deg) translateY(-3px) scale(1.045)}75%{transform:rotate(-1deg) translateY(-1px) scale(1.02)}}
+@keyframes cardEntrance{0%{opacity:0;transform:translateY(75px) rotate(-10deg) scale(.72);filter:brightness(1.6)}55%{opacity:1;transform:translateY(-14px) rotate(3deg) scale(1.055);filter:brightness(1.2)}78%{transform:translateY(5px) rotate(-1deg) scale(.99)}100%{opacity:1;transform:translateY(0) rotate(0) scale(1);filter:brightness(1)}}
+.elimination-ghost{position:fixed!important;z-index:9998!important;margin:0!important;pointer-events:none!important;box-sizing:border-box!important;animation:none!important}
+.elimination-ghost .art-character{animation:none!important}
+.elimination-ghost.slash-effect{animation:cutAway .72s ease-in forwards!important}
+.elimination-ghost.banish-effect{animation:banishAway .8s ease-in forwards!important}
+.elimination-fx{position:fixed;z-index:9999;pointer-events:none;overflow:visible}
+.blade-streak{position:absolute;top:45%;left:-22%;width:150%;height:6px;background:linear-gradient(90deg,transparent,#fff 20%,#a7f0ff 52%,#fff 80%,transparent);box-shadow:0 0 13px 5px #85d7ff99;transform:rotate(-33deg) scaleX(0);animation:bladeSwipe .42s ease-out forwards;border-radius:100%}
+.blade-streak.second{top:57%;transform:rotate(28deg) scaleX(0);animation-delay:.12s;background:linear-gradient(90deg,transparent,#ffe8bc,#fff,transparent);box-shadow:0 0 10px #ffe3a4}
+.holy-fx{background:radial-gradient(circle,#fef9dfaa 0%,#b8a4ff77 30%,transparent 70%);animation:holyFlash .8s ease-out forwards}
+.holy-symbol{position:absolute;inset:20% 0;text-align:center;font-size:34px;color:#fff8d0;text-shadow:0 0 14px #fff,0 0 28px #b6a4ff;animation:holyFloat .75s ease-out forwards}
+@keyframes bladeSwipe{0%{opacity:0;transform:rotate(-33deg) scaleX(0)}30%{opacity:1;transform:rotate(-33deg) scaleX(1)}100%{opacity:0;transform:rotate(-33deg) scaleX(1.15)}}
+@keyframes cutAway{0%,18%{opacity:1;transform:rotate(0) scale(1)}55%{opacity:1;transform:rotate(8deg) translate(8px,-7px) scale(1.03);filter:brightness(2)}100%{opacity:0;transform:rotate(23deg) translate(45px,40px) scale(.72);filter:brightness(.4)}}
+@keyframes banishAway{0%{opacity:1;transform:scale(1);filter:brightness(1)}35%{opacity:1;filter:brightness(3) saturate(.3);transform:scale(1.08)}100%{opacity:0;filter:brightness(5) blur(9px);transform:translateY(-45px) scale(.55)}}
+@keyframes holyFlash{0%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1.25)}100%{opacity:0;transform:scale(1.8)}}
+@keyframes holyFloat{0%{opacity:0;transform:translateY(15px) scale(.6)}35%{opacity:1;transform:translateY(-5px) scale(1.2)}100%{opacity:0;transform:translateY(-40px) scale(1.6)}}
+@media(prefers-reduced-motion:reduce){.card .art-character,.expedition .card.deal-new,.elimination-ghost,.elimination-fx,.blade-streak,.holy-symbol{animation:none!important}}
+.card-skill.skill-empty{display:flex;align-items:center;justify-content:center;color:#9b8c70;letter-spacing:7px;font-size:13px;background:linear-gradient(110deg,#eee0c1,#e0d0a8)}
+.card-skill{font-size:10px;line-height:1.24;overflow:hidden}
+.card.no-skill .card-art{height:144px}.card.no-skill .art-character{font-size:76px}.card.no-skill .card-foot{margin-top:auto}
+
+/* Dungeon Cats — stone-and-brass art direction */
+:root{--bg:#090b0f;--panel:#161719;--panel2:#252527;--line:#69583e;--cream:#f4dfb5;--muted:#b6ada1;--gold:#e9b65e;--red:#ba6157;--green:#8fae82}
+*{scrollbar-color:#806947 #151719}
+body{color:#f3e6cf;background:#090b0f!important;font-family:'Trebuchet MS',Arial,sans-serif}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% -10%,#9b652a3d,transparent 55%),linear-gradient(#07080bb5,#07080bd9),url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22210%22%20height%3D%22132%22%20viewBox%3D%220%200%20210%20132%22%3E%3Crect%20width%3D%22210%22%20height%3D%22132%22%20fill%3D%22%23161a1d%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23070b10%22%20stroke-width%3D%224%22%20opacity%3D%22.8%22%3E%3Cpath%20d%3D%22M0%200H210M0%2045H210M0%2090H210M0%20132H210M30%200V45M120%200V45M78%2045V90M179%2045V90M28%2090V132M124%2090V132%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%2357616a%22%20stroke-width%3D%221.5%22%20opacity%3D%22.24%22%3E%3Cpath%20d%3D%22M0%203H210M0%2048H210M0%2093H210M34%204V43M124%204V43M82%2048V88M183%2048V88M32%2094V130M128%2094V130%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23818183%22%20opacity%3D%22.16%22%3E%3Cpath%20d%3D%22m14%2018%2017%209%209-6m87%2015%2012-9%2020%205m-72%2025-10%2011%2013%205m93%2026-10%208%2012%209m-126%205%209%207%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');background-size:auto,auto,210px 132px;opacity:1}
+.wrap{max-width:1550px;padding:20px 24px 38px}
+.top{position:relative;padding:10px 15px 22px;border-bottom:2px solid #866940;background:linear-gradient(90deg,transparent,#5a3e2244 40%,transparent)}
+.top:after{content:"✦  ✦  ✦";position:absolute;bottom:-9px;left:48%;background:#111216;padding:0 12px;color:#d8a756;font-size:13px;letter-spacing:8px}
+.top h1{font-family:Georgia,serif;font-size:clamp(32px,4.8vw,60px);font-weight:900;letter-spacing:3px;color:#f7e5bf;text-shadow:0 3px 0 #4e2a17,0 5px 8px #000,0 0 24px #b1782c77}
+.top h1 span:not(.brand-paw){color:#e8aa56}
+.brand-paw{display:inline-block;font-size:.68em;filter:drop-shadow(0 0 7px #dc9a42);vertical-align:8%}
+.top .sub{font-size:11px;letter-spacing:3.2px;color:#e0b77b;font-weight:800}
+.controls{gap:10px}
+.panel,.player,.dialog,.market-item{position:relative;border:2px solid #67553c;background:linear-gradient(135deg,#252525f7,#111316fa 65%,#1a1c1e);box-shadow:inset 0 0 0 2px #07080b,inset 0 0 0 4px #37322a,0 12px 28px #000a;border-radius:6px}
+.panel:before,.dialog:before{content:"◆";position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:16px;color:#bb9154;background:#1b1b1b;padding:0 8px;z-index:1}
+.expedition{padding:23px 26px;min-height:70vh}
+.sectionhead{padding-bottom:12px;border-bottom:1px solid #735c3e;margin-bottom:15px}
+.sectionhead h2,.sectionhead h3,.market-header h2{font-family:Georgia,serif;color:#e9bc78;font-size:clamp(20px,2.4vw,30px);letter-spacing:1px;text-shadow:0 2px #000}
+.sectionhead h3{font-size:19px}
+.sectionhead .muted{font-size:12px}
+.stat{position:relative;background:linear-gradient(145deg,#302b26,#14171b);border:1px solid #806747;border-radius:4px;min-width:152px;padding:13px 18px;color:#dec6a0;box-shadow:inset 0 0 0 2px #151413}
+.stat b{font-family:Georgia,serif;font-size:27px;color:#fff0c8;display:block;margin-top:5px;text-shadow:0 2px 5px #000}
+.expedition .stats{justify-content:center;gap:12px;margin:16px 0}
+.badge{background:linear-gradient(#302a25,#17191c);border:1px solid #796141;color:#f2d49b;border-radius:4px;padding:7px 11px;font-weight:800}
+.meter{background:#080b0d;border:1px solid #806a4c;height:12px}
+.meter>div{background:linear-gradient(90deg,#8a5235,#f0b75d)!important}
+.expedition .cards{position:relative;min-height:430px;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;align-items:flex-start;gap:18px;padding:35px 20px 48px;border:7px ridge #4d463c;border-radius:5px;background:radial-gradient(ellipse at 50% 25%,#b28a4830,transparent 65%),linear-gradient(#0c1013a9,#090b0cce),url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22210%22%20height%3D%22132%22%20viewBox%3D%220%200%20210%20132%22%3E%3Crect%20width%3D%22210%22%20height%3D%22132%22%20fill%3D%22%23161a1d%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23070b10%22%20stroke-width%3D%224%22%20opacity%3D%22.8%22%3E%3Cpath%20d%3D%22M0%200H210M0%2045H210M0%2090H210M0%20132H210M30%200V45M120%200V45M78%2045V90M179%2045V90M28%2090V132M124%2090V132%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%2357616a%22%20stroke-width%3D%221.5%22%20opacity%3D%22.24%22%3E%3Cpath%20d%3D%22M0%203H210M0%2048H210M0%2093H210M34%204V43M124%204V43M82%2048V88M183%2048V88M32%2094V130M128%2094V130%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23818183%22%20opacity%3D%22.16%22%3E%3Cpath%20d%3D%22m14%2018%2017%209%209-6m87%2015%2012-9%2020%205m-72%2025-10%2011%2013%205m93%2026-10%208%2012%209m-126%205%209%207%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');background-size:auto,auto,210px 132px;box-shadow:inset 0 0 0 2px #9d784b,inset 0 0 60px #000b,0 7px 18px #0009}
+.expedition .cards:before{content:"⚔  LA CRIPTA DE LOS GATOS  ⚔";position:absolute;bottom:10px;left:0;right:0;text-align:center;font:700 12px Georgia,serif;letter-spacing:4px;color:#c8a5726b;pointer-events:none}
+.expedition .cards:after{content:"✦";position:absolute;top:4px;left:50%;transform:translateX(-50%);color:#e3b66e88;font-size:16px;pointer-events:none}
+.card,.expedition .card,.market-item .card{position:relative;width:160px;height:271px;min-height:271px;max-height:271px;flex:0 0 160px;border:3px double var(--card-accent,#b69a65);border-radius:6px;padding:6px;gap:0;background:linear-gradient(145deg,#463b30,#26252a 48%,#17191d);box-shadow:inset 0 0 0 2px #100f11,0 7px 0 #0b0a0c,0 14px 18px #000a;overflow:hidden;transition:transform .22s,box-shadow .22s;animation:dungeonDeal .35s ease-out both}
+.card:hover{transform:translateY(-8px) rotate(-1deg);box-shadow:inset 0 0 0 2px #100f11,0 15px 0 #0b0a0c,0 22px 22px #000b;z-index:3}
+.card.enemy{background:linear-gradient(145deg,#613a35,#322326 55%,#1d181b)}
+.card.undead{background:linear-gradient(145deg,#564662,#30283a 55%,#1a1822)}
+.card-top{min-height:21px;padding:3px 5px 4px;letter-spacing:1.4px;font-size:9px;color:#f4deb5}
+.card-star{color:#e1b975}
+.card-art{height:105px;position:relative;border:2px solid #a88b5e;border-radius:2px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#8a735f,#403c3c 60%,#23282b)}
+.enemy .card-art{background:radial-gradient(circle at 50% 40%,#966157,#51353a 60%,#29202a)}
+.undead .card-art{background:radial-gradient(circle at 50% 40%,#8880a0,#4e445f 60%,#27212e)}
+.art-halo{position:absolute;width:88px;height:88px;border:2px solid #d9b98166;border-radius:50%;box-shadow:0 0 20px #d2a75a36,inset 0 0 15px #d2a75a26}
+.art-halo:after{content:"";position:absolute;inset:9px;border:1px dashed #eed19c66;border-radius:50%}
+.art-character{position:relative;z-index:1;font-size:66px;line-height:1;filter:drop-shadow(0 7px 4px #000c);transform-origin:50% 80%;animation:dungeonBreath 3.8s ease-in-out infinite}
+.art-runes{color:#f4d4a48a}
+.card-name{font-family:Georgia,serif;font-size:14px;font-weight:900;line-height:1.06;color:#fff0cf;text-align:center;display:flex;align-items:center;justify-content:center;height:35px;min-height:35px}
+.card-type{color:var(--card-accent);font-weight:900;font-size:8px;letter-spacing:1.1px;text-align:center;height:13px}
+.card-value{display:flex;justify-content:center;gap:6px;margin:2px 0 5px}
+.card-value span{font-size:12px;min-width:52px;text-align:center;background:#0b1014e8;border:1px solid #9e8055;border-radius:4px;padding:3px 4px;color:#f7d17d}
+.card-value span:last-child{color:#c5a7f1;border-color:#8972a3}
+.card-skill{height:45px;min-height:45px;max-height:45px;overflow:auto;background:#e8d8b0;color:#302920;font-size:10px;line-height:1.25;font-weight:700;padding:5px 6px;border-radius:2px;border:1px solid #9b7d51;text-align:center;scrollbar-width:thin;flex:1}
+.card-foot{height:13px;display:flex;justify-content:space-between;align-items:center;color:#bca17b;font-size:7px;letter-spacing:.8px;padding:2px 5px}
+.gold-coin{display:inline-flex!important;align-items:center;justify-content:center;width:16px!important;min-width:16px!important;height:16px;border-radius:50%!important;border:2px solid #ffe6a0!important;background:radial-gradient(circle at 30% 20%,#fff2a8,#dfa13d 62%,#8b5023)!important;box-shadow:inset 0 0 0 1px #b77425;color:#6c3c14!important;font:bold 10px Georgia,serif!important;padding:0!important;vertical-align:middle;font-style:normal!important}
+button{border:1px solid #977349;border-radius:4px;background:linear-gradient(#504032,#302922);color:#f8e5c5;box-shadow:inset 0 1px #e2bb7850,0 3px 0 #110f10;letter-spacing:.3px;font-weight:800}
+button:hover:not(:disabled){filter:brightness(1.18)}
+button.primary{background:linear-gradient(#b07c41,#71401e);border-color:#e6b977;color:#fff2d3}
+button.danger{background:linear-gradient(#74403a,#3c2323);border-color:#b97163}
+.actions{justify-content:center;gap:12px;margin-top:20px}
+.actions button{padding:13px 21px}
+.players-bottom{margin-top:20px;gap:14px}
+.player{padding:15px 18px;background:linear-gradient(135deg,#302a25,#16181b 60%,#21201e);border-color:#766145}
+.player.active{border-color:#e5b366;background:linear-gradient(135deg,#463a2b,#242d2c 70%);box-shadow:inset 0 0 0 2px #2a2119,0 0 0 2px #d4a95c88,0 10px 24px #0009}
+.player strong{font-family:Georgia,serif;font-size:19px;color:#f1d19a}
+.player small{color:#d8b78b}
+.market-dialog{width:min(1200px,96vw);max-height:92vh;overflow:auto;background:linear-gradient(135deg,#2e2823,#111416);border:3px ridge #a27c4c}
+.market-header{border-bottom:1px solid #86663e;padding-bottom:15px}
+.market-dialog .market{grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:14px}
+.market-item{padding:9px;background:linear-gradient(#322d27,#1a1b1d);border:1px solid #796246;transition:transform .2s,border-color .2s}
+.market-item:hover{transform:translateY(-3px);border-color:#d8ad69}
+.market-item .card{width:100%;height:271px;min-height:271px;max-height:271px;flex:auto;box-shadow:none}
+.market-item .price{font-size:13px;color:#f2c67c;margin-top:10px}
+.market-item .buy{width:100%;background:linear-gradient(#84623e,#4c3323);border-color:#c99c60;padding:10px}
+.market-tabs button.selected{background:linear-gradient(#9c784c,#5d4129);border-color:#e9bc7a}
+.outcome-dialog{border:3px ridge #bc945a;background:radial-gradient(ellipse at 50% 0%,#65503a,#29241f 52%,#141719);box-shadow:0 24px 90px #000e,inset 0 0 0 4px #ffffff0a}
+.outcome-dialog.failure{border-color:#c17b70;background:radial-gradient(ellipse at 50% 0%,#673b3c,#2d2123 55%,#141719)}
+.outcome-dialog h2{font-family:Georgia,serif;color:#f6d7a0}
+.reward{background:linear-gradient(#3d3028,#17191c);border-color:#967447}
+.reward strong{font-family:Georgia,serif}
+.player-choice{border:2px solid #826543;background:linear-gradient(145deg,#3b332b,#1b1d1f);border-radius:6px}
+.player-choice.selected{border-color:#f2c477;box-shadow:inset 0 0 0 2px #a87b45,0 8px 25px #0009;background:linear-gradient(#5a4834,#292821)}
+#startScreen{padding:52px 15px}
+#startScreen>p{font-size:17px;color:#e5d4b8;line-height:1.7}
+#startScreen>.primary{font-size:16px;padding:16px 42px}
+.foot{color:#a78f70;text-align:center;font-size:11px;margin-top:18px}
+@keyframes dungeonBreath{0%,100%{transform:rotate(-4deg) translateY(0) scale(1)}25%{transform:rotate(-1deg) translateY(-2px) scale(1.025)}50%{transform:rotate(3deg) translateY(-3px) scale(1.04)}75%{transform:rotate(0) translateY(-1px) scale(1.02)}}
+@keyframes dungeonDeal{0%{opacity:0;transform:translateY(38px) rotate(-7deg) scale(.88)}65%{opacity:1;transform:translateY(-6px) rotate(2deg) scale(1.02)}100%{transform:translateY(0) rotate(0) scale(1)}}
+@media(max-width:550px){.wrap{padding:8px}.expedition{padding:12px}.expedition .cards{gap:9px;padding:20px 7px 42px}.expedition .card{flex:0 0 calc(50% - 6px);width:calc(50% - 6px);height:271px;min-height:271px}.stat{min-width:calc(50% - 8px)}.market-dialog .market{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.market-item{padding:5px}.market-item .card{height:271px;min-height:271px}}
+@media(prefers-reduced-motion:reduce){.art-character,.card{animation:none!important}}
+
+/* v1.1 — persistent bottom market controls */
+.market-dialog{display:flex;flex-direction:column;overflow:hidden!important;max-height:min(94vh,1100px);padding-bottom:0!important}
+.market-header{flex:0 0 auto}
+.market-tabs{flex:0 0 auto}
+.market-dialog .market{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overscroll-behavior:contain;padding:10px 6px 18px}
+.shop-footer{position:relative;z-index:2;flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 18px;margin:0 -22px;background:linear-gradient(180deg,#31291e,#161719);border-top:2px solid #b88b4b;box-shadow:0 -8px 28px #0008}
+.shop-wallet{display:flex;align-items:center;gap:18px}
+.wallet-caption{font:800 11px Georgia,serif;color:#cfb78c;letter-spacing:1.3px}
+.wallet-amount{display:flex;align-items:center;gap:9px}
+.wallet-coin{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:3px solid #ffdc88;border-radius:50%;background:radial-gradient(circle at 30% 20%,#fff1a1,#d9942d 65%,#8a4b1c);box-shadow:inset 0 0 0 2px #a86620,0 2px 9px #0009;color:#784214;font:900 21px Georgia,serif}
+#shopGold{font:900 clamp(27px,3vw,39px) Georgia,serif;color:#ffd88c;text-shadow:0 2px 5px #000;min-width:2ch}
+.wallet-unit{color:#d9b77d;font-size:11px;font-weight:800;letter-spacing:1px}
+.shop-finish{font-size:16px;padding:14px 28px;min-width:235px}
+/* Dedicated game victory screen */
+#victoryOverlay{z-index:30;background:radial-gradient(ellipse at center,#3a2a20e8,#06080bf5 70%);overflow-y:auto}
+.victory-dialog{position:relative;isolation:isolate;overflow:hidden;text-align:center;width:min(660px,96vw);border:3px ridge #e7b75e;background:radial-gradient(ellipse at 50% 15%,#655039,#30251d 46%,#13171a 90%);padding:36px 34px 32px;box-shadow:0 0 0 4px #16120c,0 0 65px #d69b3c44,0 30px 100px #000e;animation:victoryAppear .8s cubic-bezier(.17,1.35,.3,1) both}
+.victory-dialog:before{content:'✦';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#382c21;color:#f8d88f;padding:0 16px;z-index:3}
+.victory-rays{position:absolute;z-index:-1;inset:-80%;background:repeating-conic-gradient(from 0deg,#e8b76014 0deg 11deg,transparent 11deg 24deg);animation:victoryRotate 26s linear infinite;pointer-events:none}
+.victory-crown{font-size:86px;line-height:1.2;filter:drop-shadow(0 0 25px #e9b75f99);animation:victoryFloat 2.8s ease-in-out infinite}
+.victory-kicker{font:800 12px Georgia,serif;letter-spacing:5px;color:#e6c08a;margin:12px 0 8px}
+.victory-dialog h2{font:900 clamp(42px,7vw,75px) Georgia,serif;letter-spacing:5px;color:#ffdf98;text-shadow:0 4px 0 #7d4423,0 7px 13px #000,0 0 30px #f5ba5966;margin:5px 0 8px}
+.victory-winner{font:900 clamp(24px,4vw,36px) Georgia,serif;color:#fff5d8;margin:8px 0}
+.victory-sub{font-size:15px;color:#ead6b3;margin:8px 0 24px}
+.victory-score{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 16px}
+.victory-score>div{background:linear-gradient(#3e3025,#1b1c1d);border:1px solid #9d7c4d;border-radius:4px;padding:15px 6px}
+.victory-score span{display:block;font-size:9px;letter-spacing:1px;color:#d9bf98;font-weight:800}
+.victory-score strong{display:block;font:900 clamp(19px,3vw,27px) Georgia,serif;color:#ffe2a0;margin-top:7px}
+.victory-sparkles{color:#ffdd8e;font-size:23px;letter-spacing:12px;animation:victoryTwinkle 2.2s ease-in-out infinite;margin:14px 0}
+.victory-restart{padding:15px 30px;font-size:17px;margin-top:6px}
+@keyframes victoryAppear{0%{opacity:0;transform:translateY(70px) scale(.72)}65%{opacity:1;transform:translateY(-8px) scale(1.04)}100%{transform:translateY(0) scale(1)}}
+@keyframes victoryFloat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+@keyframes victoryRotate{to{transform:rotate(360deg)}}
+@keyframes victoryTwinkle{0%,100%{opacity:.65;transform:scale(.95)}50%{opacity:1;transform:scale(1.07)}}
+@media(max-width:650px){.shop-footer{flex-direction:column;align-items:stretch;gap:10px;padding:12px;margin:0 -14px}.shop-wallet{justify-content:space-between}.shop-finish{width:100%;min-width:0}.market-dialog{max-height:96vh}.victory-dialog{padding:28px 14px}.victory-score{gap:5px}.victory-score>div{padding:12px 4px}.victory-score span{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.victory-dialog,.victory-rays,.victory-crown,.victory-sparkles{animation:none!important}}
+
+/* v1.2 — player setup, purchase limits, curse and taming feedback */
+.player-name-setup{max-width:800px;margin:4px auto 26px;padding:18px;border:1px solid #86663e;background:linear-gradient(145deg,#28231e,#13171b);box-shadow:inset 0 0 0 2px #13110f}
+.setup-heading{font:700 14px Georgia,serif;letter-spacing:2px;color:#edc581;margin-bottom:16px}
+.name-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;text-align:left}
+.name-entry{display:flex;flex-direction:column;gap:6px;font-size:10px;letter-spacing:1.4px;font-weight:800;color:#d2b789}
+.name-entry input{width:100%;background:#101319;border:1px solid #9b7b4e;border-radius:4px;padding:12px 11px;color:#f8e7c5;font-size:15px;outline:none}
+.name-entry input:focus{border-color:#f4c577;box-shadow:0 0 0 3px #c69b5340}
+.stock-info{color:#bcb1a1;font-size:11px;text-align:center;letter-spacing:.4px;margin:7px 0 2px;font-weight:800}
+.market-item:has(.buy:disabled) .stock-info{color:#f1b377}
+.curse-warning{width:100%;padding:14px 16px;background:linear-gradient(110deg,#43223e,#26192f);border:2px solid #d99be8;border-radius:5px;box-shadow:0 0 20px #b450d044,inset 0 0 18px #c55dd522;animation:cursePulse 2.6s ease-in-out infinite}
+.curse-warning-title{font:900 14px Georgia,serif;color:#f8d2ff;letter-spacing:1px;margin-bottom:9px}
+.curse-warning-items{display:flex;flex-wrap:wrap;gap:7px}
+.curse-warning .curse-tag{background:#4c2959;border:1px solid #e0a1f1;color:#fff2ff;padding:8px 11px;border-radius:4px;font-weight:800;font-size:12px}
+.player-curse-flag{margin-top:10px;padding:8px 10px;background:#472747;border:1px solid #c68ad4;border-radius:4px;color:#f2d5fa;font-size:11px;line-height:1.4}
+.card.tamed-card{border-color:#8fe4fa!important;box-shadow:0 0 0 2px #8ae7ff80,0 0 22px #77dfffa8,0 7px 0 #0b0a0c,0 14px 18px #000a!important}
+.tamed-shield{position:absolute;z-index:5;top:35px;right:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;width:57px;height:65px;background:radial-gradient(circle,#9befffcc,#2573a7bb 50%,#153e75bb);border:2px solid #d9fbff;border-radius:48% 48% 43% 43%;box-shadow:0 0 19px 5px #8cecffaa;animation:tameShield .8s ease-out both;pointer-events:none}
+.tamed-shield span{font-size:27px;filter:drop-shadow(0 2px 3px #063e59)}
+.tamed-shield small{font-size:8px;font-weight:900;color:white;letter-spacing:.7px;text-shadow:0 1px 3px #000}
+@keyframes tameShield{0%{opacity:0;transform:scale(.2) rotate(-25deg);filter:brightness(3)}60%{opacity:1;transform:scale(1.25) rotate(6deg);filter:brightness(1.6)}100%{transform:scale(1) rotate(0);filter:brightness(1)}}
+@keyframes cursePulse{0%,100%{box-shadow:0 0 10px #b450d033,inset 0 0 15px #c55dd522}50%{box-shadow:0 0 24px #b450d077,inset 0 0 22px #c55dd544}}
+@media(prefers-reduced-motion:reduce){.tamed-shield,.curse-warning{animation:none!important}}
+@media(min-width:550px){.player-choice{width:142px}}.solo-help{font-size:12px;color:#d7b37b;text-align:center;margin-top:10px}
+
+/* v1.4: theatrical start-of-turn announcement */
+.turn-intro-dialog{width:min(570px,92vw);min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 30px;background:radial-gradient(ellipse at 50% 0%,#60462b,#2a2624 54%,#101417 100%);border:3px ridge #c6a16b;box-shadow:0 28px 90px #000e,inset 0 0 0 5px #b48c3824;animation:turnIntroAppear .55s cubic-bezier(.2,1.25,.3,1) both}
+.turn-intro-crest{font-size:60px;filter:drop-shadow(0 4px 10px #000);animation:turnIntroFloat 2.6s ease-in-out infinite}
+.turn-intro-eyebrow{font:800 11px Georgia,serif;letter-spacing:4px;color:#dbad69;margin:14px 0 10px}
+.turn-intro-dialog h2{font:900 clamp(22px,4vw,34px) Georgia,serif;color:#ffe0a7;text-shadow:0 2px #000;letter-spacing:2px;margin:0 0 10px}
+.turn-intro-name{font:900 clamp(27px,5vw,46px) Georgia,serif;color:#fff5df;max-width:100%;overflow-wrap:anywhere;text-shadow:0 0 25px #e5a85a66}
+.turn-intro-round{color:#c5b6a0;font-size:12px;letter-spacing:3px;margin:14px 0 26px}
+.turn-intro-button{font-size:16px;padding:15px 30px;min-width:230px}
+@keyframes turnIntroAppear{from{opacity:0;transform:translateY(32px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes turnIntroFloat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-6px) rotate(4deg)}}
+@media(prefers-reduced-motion:reduce){.turn-intro-dialog,.turn-intro-crest{animation:none!important}}
+
+/* v1.6 — enemigo peligroso y derrota solitaria exclusiva */
+#soloGameOverOverlay{z-index:45;background:radial-gradient(ellipse at center,#591b21ee,#08080df8 72%)}
+.solo-game-over-dialog{width:min(550px,94vw);text-align:center;border:3px ridge #b14e51;background:radial-gradient(ellipse at 50% 0%,#50282e,#21191e 56%,#111216);box-shadow:0 0 100px #a51d2738,0 30px 90px #000e;padding:40px 30px;animation:gameOverAppear .55s ease-out both}
+.game-over-skull{font-size:82px;color:#e29b99;line-height:1;filter:drop-shadow(0 0 22px #d22b3977);animation:skullHover 3s ease-in-out infinite}
+.game-over-eyebrow{font-size:11px;letter-spacing:3px;color:#d09d9d;margin-top:12px;font-weight:800}
+.solo-game-over-dialog h2{font:900 clamp(46px,8vw,74px) Georgia,serif;color:#ffb2a8;letter-spacing:5px;text-shadow:0 3px #521b24,0 0 26px #d9474960;margin:8px 0 13px}
+.game-over-message{color:#e2c8c2;font-size:15px;line-height:1.6;max-width:390px;margin:0 auto 17px}
+.game-over-player{font:700 21px Georgia,serif;color:#f7d3a5;margin-bottom:20px}
+.game-over-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 27px}
+.game-over-stats>div{padding:14px 7px;background:#100e13a8;border:1px solid #845459;display:flex;flex-direction:column;gap:8px}
+.game-over-stats small{font-size:10px;letter-spacing:1px;color:#bda4a0}
+.game-over-stats strong{font:700 18px Georgia,serif;color:#ffddd2}
+.solo-game-over-dialog button{padding:14px 30px}
+@keyframes gameOverAppear{from{opacity:0;transform:translateY(35px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes skullHover{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.enemy-screen-flash{position:fixed;inset:0;z-index:40;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,#c9303845 80%,#f3444c55);animation:enemyFlash .55s ease-out forwards}
+@keyframes enemyFlash{0%{opacity:0}22%{opacity:1}100%{opacity:0}}
+.expedition .card.enemy-spawn{animation:enemyCardHit .66s cubic-bezier(.18,.9,.25,1) both!important;z-index:5;box-shadow:0 0 0 2px #e64750,0 0 28px #e6475077,0 8px 0 #080809!important}
+@keyframes enemyCardHit{0%{transform:translateY(-34px) scale(1.28) rotate(-7deg);filter:brightness(2.4)}30%{transform:translateY(5px) scale(1.07) rotate(3deg);filter:brightness(1.5)}45%{transform:translate(-5px,0) rotate(-2deg)}55%{transform:translate(5px,0) rotate(2deg)}70%{transform:translate(-3px,0) rotate(-1deg)}100%{transform:translateY(0) scale(1);filter:brightness(1)}}
+.enemy-spawn-warning{position:absolute;z-index:9;left:4px;right:4px;top:38%;background:#7f1e27ed;border:1px solid #f7a3a0;border-radius:3px;padding:7px 2px;text-align:center;font:900 12px Georgia,serif;letter-spacing:1px;color:#fff1e7;text-shadow:0 2px #300b0e;box-shadow:0 0 18px #f2444b;pointer-events:none;animation:warningAppear 1s ease-out forwards}
+@keyframes warningAppear{0%{opacity:0;transform:scale(.5)}18%{opacity:1;transform:scale(1.1)}35%{transform:scale(1)}75%{opacity:1}100%{opacity:0;transform:translateY(-20px)}}
+@media(max-width:500px){.game-over-stats{grid-template-columns:1fr}.game-over-stats>div{padding:8px}.solo-game-over-dialog{padding:24px 16px}}
+@media(prefers-reduced-motion:reduce){.enemy-screen-flash,.enemy-spawn-warning,.expedition .card.enemy-spawn,.solo-game-over-dialog,.game-over-skull{animation:none!important}}
+/* v1.6: icon-only enemy alert and tactile mobile shopping */
+.enemy-spawn-warning{left:50%;right:auto;top:34%;transform:translateX(-50%);width:68px;height:68px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;font-size:39px;letter-spacing:0;line-height:1;background:radial-gradient(circle,#b52a35,#4e0e17);border:2px solid #ffaaa0;box-shadow:0 0 0 4px #240a0aaa,0 0 28px #f2444b}
+.market-item[data-can-buy='1']{cursor:pointer}.market-item[data-can-buy='1']:focus-visible{outline:3px solid #eac16d;outline-offset:3px}.market-item{isolation:isolate}.market-spend-fx{position:absolute;z-index:20;left:50%;top:38%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;padding:12px 15px;background:#22180eea;border:2px solid #eac16d;border-radius:9px;color:#ffdb83;text-shadow:0 2px 2px #000;font-size:18px;box-shadow:0 0 28px #e4a64799;pointer-events:none;animation:marketSpendRise 1.05s ease-out forwards}.market-spend-coin{font-size:24px;color:#f6ce66}.market-just-bought{box-shadow:inset 0 0 0 2px #eac16d,0 0 22px #e9bd6577!important}
+@keyframes marketSpendRise{0%{opacity:0;transform:translate(-50%,-25%) scale(.7)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}65%{opacity:1}100%{opacity:0;transform:translate(-50%,-105%) scale(.95)}}
+@media(max-width:700px){.market-item[data-can-buy="1"]{cursor:pointer;touch-action:pan-y}.market-item[data-can-buy="1"]:active{border-color:#eac16d;background:#4a3929}.market-item .buy{display:none}.market-item[data-can-buy="0"]{opacity:.73}.market-item[data-can-buy="1"] .price:after{content:' · Toca para comprar';color:#e6d2a8;font-size:10px;font-weight:normal}}
+@media(prefers-reduced-motion:reduce){.market-spend-fx{animation:none}}
+.solo-difficulty{margin:18px 0;padding:14px;border:1px solid rgba(194,149,83,.5);border-radius:12px;background:rgba(25,18,14,.45)}.solo-difficulty-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}.solo-difficulty-options button{padding:12px 8px;min-height:70px;border:1px solid #756044;border-radius:9px;background:#2d251e;color:#f5d8a2;font-weight:800;cursor:pointer}.solo-difficulty-options button small{display:block;font-weight:500;color:#d6c1a3;margin-top:6px}.solo-difficulty-options button.selected{border-color:#e4b45f;box-shadow:0 0 0 2px rgba(228,180,95,.3);background:#493524}@media(max-width:480px){.solo-difficulty-options{grid-template-columns:1fr}.solo-difficulty-options button{min-height:55px}}.peek-choice,.rival-choice{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:18px auto}.peek-card-choice{display:flex;flex-direction:column;align-items:center;gap:10px;background:#29211b;border:2px solid #9c7b51;border-radius:10px;padding:12px;cursor:pointer;color:#f8dfa9;font-weight:bold}.peek-card-choice:hover,.rival-choice button:hover{border-color:#f2c778;box-shadow:0 0 18px #edba6b66}.peek-card-choice .card{pointer-events:none;margin:0}.peek-card-choice>span{font-size:12px}.rival-choice button{min-width:130px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px;background:linear-gradient(#3b302a,#1b1c20);border:2px solid #ad8357;border-radius:12px;color:#ffe4b5;cursor:pointer}.rival-cat{font-size:75px;line-height:1.2;filter:drop-shadow(0 5px 7px #000)}.rival-choice strong{font:700 17px Georgia,serif;overflow-wrap:anywhere}.turn-intro-curses{margin:0 0 22px;padding:13px 17px;border:2px solid #d28add;border-radius:9px;background:#3b2041;color:#f4dcff;display:flex;flex-direction:column;gap:7px;max-width:100%;text-align:left}.turn-intro-curses strong{font-size:12px;letter-spacing:1px}.turn-intro-curses span{font-size:12px}.turn-intro-curses.hidden{display:none}@media(max-width:540px){.peek-card-choice{padding:6px}.peek-choice{gap:5px}.peek-card-choice .card{transform:scale(.8);transform-origin:top center;margin-bottom:-35px}.rival-cat{font-size:60px}} .board-target-valid{cursor:pointer!important;outline:4px solid #f5c85d!important;outline-offset:3px;box-shadow:0 0 0 7px #f5c85d55,0 0 26px 8px #f4bd48aa!important;animation:targetPulse 1.15s ease-in-out infinite alternate;touch-action:manipulation}.board-target-valid::after{content:'✦ ELEGIR ✦';position:absolute;bottom:0;left:0;right:0;text-align:center;background:#302008ee;color:#ffe2a0;padding:7px 1px;font-size:11px;font-weight:900;z-index:5;pointer-events:none}.board-target-banner{display:flex;align-items:center;justify-content:center;gap:15px;flex-wrap:wrap;margin:10px 0 20px;padding:14px;border:2px solid #caa34b;border-radius:12px;background:#3b2a18;color:#ffe6b3;font-weight:800;text-align:center}.board-target-banner button{background:#6b4331;border-color:#e6bf6d}@keyframes targetPulse{from{filter:brightness(1)}to{filter:brightness(1.22)}}@media(prefers-reduced-motion:reduce){.board-target-valid{animation:none}} </style></head><body><div class="wrap"><header class="top"><div><h1><span class="brand-paw">🐾</span> DUNGEON <span>CATS</span></h1><div class="sub">PARTY DUNGEON · EDICIÓN DUNGEON v2.0</div></div><div class="controls"><span class="badge" id="phaseLabel">Preparación</span><button onclick="showRules()">📖 Reglas</button><button class="danger" onclick="resetConfirm()">Nueva partida</button></div></header><div class="layout"><main><section class="panel expedition"><div class="sectionhead"><h2 id="turnTitle">PREPARA TU EXPEDICIÓN</h2><span class="badge" id="roundBadge">Ronda 1</span></div><div id="startScreen"><p>Construye tu mazo, revela cartas, retírate antes de acumular tres enemigos y consigue <b>100 XP</b> antes que tus rivales. En solitario, selecciona la dificultad y supera su objetivo de experiencia.</p><div class="player-picker" role="group" aria-label="Número de jugadores"><button class="player-choice" data-count="1" onclick="choosePlayerCount(1)"><span class="player-choice-icon">🐱</span><span>1 jugador</span></button><button class="player-choice selected" data-count="2" onclick="choosePlayerCount(2)"><span class="player-choice-icon">🐱🐱</span><span>2 jugadores</span></button><button class="player-choice" data-count="3" onclick="choosePlayerCount(3)"><span class="player-choice-icon">🐱🐱🐱</span><span>3 jugadores</span></button><button class="player-choice" data-count="4" onclick="choosePlayerCount(4)"><span class="player-choice-icon">🐱🐱🐱🐱</span><span>4 jugadores</span></button></div><div id="soloDifficulty" class="solo-difficulty hidden"><div class="setup-heading">✦ DIFICULTAD EN SOLITARIO ✦</div><div class="solo-difficulty-options"><button type="button" class="selected" data-solo-level="easy" onclick="chooseSoloLevel('easy')">🌿 Fácil<small>100 XP · 15 turnos</small></button><button type="button" data-solo-level="medium" onclick="chooseSoloLevel('medium')">⚔️ Medio<small>200 XP · 10 turnos</small></button><button type="button" data-solo-level="hard" onclick="chooseSoloLevel('hard')">💀 Difícil<small>500 XP · 15 turnos</small></button></div></div><div class="player-name-setup"><div class="setup-heading">✦ NOMBRES DE LOS AVENTUREROS ✦</div><div id="playerNameInputs" class="name-inputs"></div></div><button class="primary" onclick="startGame()">Empezar partida</button></div><div id="gameScreen" class="hidden"><div class="stats"><div class="stat">💰 Oro total <b id="gold">0</b></div><div class="stat">⭐ XP total <b id="xp">0</b><div class="meter"><div id="xpbar" style="width:0%"></div></div></div><div class="stat">🃏 En mazo <b id="deckcount">8</b></div><div class="stat">☠️ Enemigos <b id="enemycount">0 / 3</b></div></div><div id="curseIndicators" class="market-info"></div><div class="stats"><span class="badge">💰 Ronda: <b id="tempGold">0</b></span><span class="badge">⭐ Ronda: <b id="tempXp">0</b></span><span class="badge">🃏 Por revelar: <b id="remaining">0</b></span></div><div class="sectionhead"><h3>⚔️ SALA DE EXPEDICIÓN</h3><span id="statusText" class="muted"></span></div><div id="tableau" class="cards"></div><div class="actions"><button class="primary" id="revealBtn" onclick="reveal()">Revelar carta</button><button id="bankBtn" onclick="bank()">Retirarse y cobrar</button><button id="openMarketBtn" class="hidden primary" onclick="showShop()">🏪 Abrir mercado</button><button id="soundBtn" onclick="toggleSound()" title="Activar o silenciar sonidos">🔊 Sonido</button></div></div></section></main></div><div id="players" class="players players-bottom"></div><div class="foot">Versión 2.0 · Tres dificultades en solitario · Mercado emergente · Mecánicas y costes sujetos a balance.</div></div><div id="turnIntroOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="turnIntroTitle"><div class="dialog turn-intro-dialog"><div class="turn-intro-crest">⚔️</div><div class="turn-intro-eyebrow">✦ NUEVA EXPEDICIÓN ✦</div><h2 id="turnIntroTitle">COMIENZA EL TURNO</h2><div class="turn-intro-name" id="turnIntroName"></div><div class="turn-intro-round" id="turnIntroRound"></div><div id="turnIntroCurses" class="turn-intro-curses hidden"></div><button class="primary turn-intro-button" id="turnIntroStartButton" onclick="beginCurrentTurn()">⚔️ Comenzar expedición</button></div></div><div id="outcomeOverlay" class="overlay hidden"><div id="outcomeDialog" class="dialog outcome-dialog"><div id="outcomeIcon" class="outcome-icon">🏕️</div><div class="outcome-eyebrow">RESULTADO DE LA EXPEDICIÓN</div><h2 id="outcomeTitle">¡Sobreviviste!</h2><p id="outcomeDescription"></p><div class="reward-grid"><div class="reward gold-reward"><small>ORO OBTENIDO</small><strong id="outcomeGold">+0</strong></div><div class="reward xp-reward"><small>EXPERIENCIA OBTENIDA</small><strong id="outcomeXp">+0</strong></div></div><div class="outcome-total" id="outcomeTotal"></div><div class="actions outcome-actions"><button class="primary" onclick="openShopFromOutcome()">🏪 Ir al mercado</button><button onclick="finishTurnFromOutcome()">Terminar turno →</button></div></div></div><div id="shopOverlay" class="overlay hidden"><div class="dialog market-dialog"><div class="market-header"><div><h2>⚒️ MERCADO DE LA CIUDADELA</h2><div class="sub">Recluta aventureros y criaturas para tu mazo</div></div></div><div id="shopTabs" class="market-tabs"></div><div id="market" class="market"></div><div class="shop-footer"><div class="shop-wallet"><span class="wallet-caption">ORO DISPONIBLE</span><div class="wallet-amount"><span class="wallet-coin">G</span><strong id="shopGold">0</strong></div></div><button class="primary shop-finish" onclick="nextPlayer()">Finalizar compras <span aria-hidden="true">➜</span></button></div></div></div><div id="victoryOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="victoryTitle"><div class="dialog victory-dialog"><div class="victory-rays" aria-hidden="true"></div><div class="victory-crown" aria-hidden="true">👑</div><div class="victory-kicker">✦ DUNGEON CATS ✦</div><h2 id="victoryTitle">¡VICTORIA!</h2><div class="victory-winner" id="victoryWinner">Jugador 1</div><p class="victory-sub">¡Has conquistado la mazmorra y ganado la partida!</p><div class="victory-score"><div><span>EXPERIENCIA FINAL</span><strong id="victoryXp">100 XP</strong></div><div><span>ORO RESTANTE</span><strong id="victoryGold">0</strong></div><div><span>RONDAS GLOBALES</span><strong id="victoryRounds">1</strong></div></div><div class="victory-sparkles" aria-hidden="true">✦　✧　✦　✧　✦</div><button class="primary victory-restart" onclick="location.reload()">⚔️ Jugar otra partida</button></div></div><div id="soloGameOverOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="soloGameOverTitle"><div class="dialog solo-game-over-dialog"><div class="game-over-skull">☠</div><div class="game-over-eyebrow">✦ LA MAZMORRA HA VENCIDO ✦</div><h2 id="soloGameOverTitle">GAME OVER</h2><p class="game-over-message">No alcanzaste la experiencia requerida dentro del límite de expediciones.</p><div class="game-over-player" id="soloGameOverPlayer"></div><div class="game-over-stats"><div><small>EXPERIENCIA</small><strong id="soloGameOverXp">0 / 100 XP</strong></div><div><small>ORO RESTANTE</small><strong id="soloGameOverGold">0</strong></div><div><small>EXPEDICIONES</small><strong id="soloGameOverRounds">15 / 15</strong></div></div><button class="primary" onclick="location.reload()">↻ Intentar otra vez</button></div></div><div id="modal" class="overlay hidden"><div class="dialog"><h2 id="modalTitle"></h2><p id="modalBody"></p><div id="modalExtra"></div><div class="actions" id="modalButtons"></div></div></div><script>
+'use strict';
+const START=[['aventurero',4],['aprendiz',1],['rata',2],['goblin',1]];
+const defs={
+aventurero:{n:'Aventurero Felino',icon:'🐈',g:2,x:0,kind:'Aliado',text:'Obtén 2 Oro.'},aprendiz:{n:'Aprendiz',icon:'📖',g:1,x:1,kind:'Aliado',text:'Obtén 1 Oro y 1 XP.'},rata:{n:'Rata',icon:'🐀',g:1,x:1,kind:'Enemigo',text:'Enemigo básico.',tribe:'Rata'},goblin:{n:'Goblin Saqueador',icon:'👺',g:3,x:0,kind:'Enemigo',text:'Enemigo básico.',tribe:'Goblin'},
+picara:{n:'Pícara Sombría',icon:'🗡️',g:0,x:1,cost:6,kind:'Aliado',text:'Elimina un enemigo activo.',effect:'kill'},paladin:{n:'Paladín Felino',icon:'🛡️',g:0,x:2,cost:9,kind:'Aliado',text:'Elimina hasta dos enemigos.',effect:'kill2'},cazador:{n:'Cazador',icon:'🏹',g:2,x:0,cost:5,kind:'Aliado',text:'Elimina una Bestia (Rata).',effect:'hunt'},exorcista:{n:'Exorcista',icon:'✨',g:0,x:1,cost:7,kind:'Aliado',text:'Elimina 1 No Muerto. Gana +2 XP.',effect:'exorcise'},
+mago:{n:'Mago Temporal',icon:'⏳',g:0,x:1,cost:8,kind:'Aliado',text:'Mueve 1 carta al fondo del mazo.',effect:'bottom'},mezclador:{n:'Barajador Arcano',icon:'🌀',g:0,x:2,cost:6,kind:'Aliado',text:'Baraja de nuevo las cartas restantes.',effect:'reshuffle'},cartografa:{n:'Cartógrafa',icon:'🧭',g:1,x:0,cost:5,kind:'Aliado',text:'Mira y reordena las próximas 2 cartas.',effect:'peek'},tramposo:{n:'Tramposo',icon:'🎭',g:0,x:1,cost:7,kind:'Aliado',text:'Retira 1 carta activa.',effect:'kill'},invocadora:{n:'Invocadora',icon:'🔮',g:0,x:2,cost:8,kind:'Aliado',text:'Revela 2 cartas más.',effect:'draw2'},
+mercader:{n:'Mercader',icon:'💰',g:4,x:0,cost:4,kind:'Aliado',text:'Trío: +10 Oro.'},banquera:{n:'Banquera',icon:'🏦',g:6,x:0,cost:7,kind:'Aliado',text:'Genera 6 Oro.'},ladron:{n:'Ladrón',icon:'🦝',g:3,x:0,cost:6,kind:'Aliado',text:'Roba 2 Oro al siguiente jugador.',effect:'steal'},recaudador:{n:'Recaudador',icon:'🧾',g:0,x:0,cost:8,kind:'Aliado',text:'+2 Oro por enemigo activo.',effect:'tax'},
+erudita:{n:'Erudita',icon:'📚',g:0,x:5,cost:7,kind:'Aliado',text:'Trío: +12 XP.'},bardo:{n:'Bardo',icon:'🎻',g:0,x:0,cost:9,kind:'Aliado',text:'+2 XP por aliado activo (máx. 8).',effect:'bard'},noble:{n:'Noble',icon:'👑',g:0,x:7,cost:10,kind:'Aliado',text:'Genera 7 XP.'},
+ratagigante:{n:'Rata Gigante',icon:'🐀',g:0,x:3,cost:3,kind:'Enemigo',text:'Enemigo rentable.',tribe:'Rata'},goblinavaro:{n:'Goblin Avaro',icon:'👺',g:7,x:0,cost:4,kind:'Enemigo',text:'Mucho Oro, mayor riesgo.',tribe:'Goblin'},mimic:{n:'Mimic',icon:'📦',g:5,x:3,cost:6,kind:'Enemigo',text:'Genera Oro y XP.'},dragon:{n:'Dragón Menor',icon:'🐉',g:5,x:12,cost:10,kind:'Enemigo',text:'Gran premio y gran riesgo.'},
+capitan:{n:'Capitán Felino',icon:'⚔️',g:0,x:2,cost:8,kind:'Aliado',text:'Si hay 3 aliados iguales: +8 XP.',effect:'captain'},jefegoblin:{n:'Jefe Goblin',icon:'👹',g:2,x:0,cost:6,kind:'Enemigo',text:'Si hay 3 Goblins activos: +10 Oro.',tribe:'Goblin',effect:'goblinboss'},domador:{n:'Domador',icon:'🐾',g:0,x:1,cost:7,kind:'Aliado',text:'Ignora los próximos 2 enemigos.',effect:'tame'},
+hechicero:{n:'Hechicero Rencoroso',icon:'🧙',g:1,x:3,cost:7,kind:'Enemigo',text:'Rival: revela 1 carta extra al retirarse.',effect:'curseDraw'},
+bruja:{n:'Bruja de la Codicia',icon:'🧹',g:2,x:2,cost:7,kind:'Enemigo',text:'Rival: −3 Oro en su próxima ronda.',effect:'curseGold'},
+espectro:{n:'Espectro del Olvido',icon:'👻',g:0,x:4,cost:8,kind:'Enemigo',text:'Rival: −3 XP en su próxima ronda.',effect:'curseXp'},
+duende:{n:'Duende Tramposo',icon:'🃏',g:2,x:1,cost:5,kind:'Enemigo',text:'Rival: revela 1 carta extra al empezar.',effect:'curseStart'},
+oraculo:{n:'Oráculo Felino',icon:'🔮',g:0,x:2,cost:7,kind:'Aliado',text:'Rival: +1 enemigo temporal al comenzar.',effect:'curseEnemy'},
+guardian:{n:'Guardián del Alba',icon:'🌞',g:1,x:2,cost:7,kind:'Aliado',text:'Elimina 1 maldición activa.',effect:'cleanse'},
+};
+defs.esqueleto={n:'Guerrero Esqueleto',icon:'☠️',g:2,x:3,cost:4,kind:'Enemigo',tribe:'No Muerto',text:'Otorga Oro y XP. Es No Muerto.'};
+defs.zombi={n:'Zombi Errante',icon:'🧟',g:1,x:5,cost:6,kind:'Enemigo',tribe:'No Muerto',text:'Da mucha XP. Cuenta como enemigo.'};
+defs.vampiro={n:'Vampiro Noble',icon:'🦇',g:2,x:4,cost:8,kind:'Enemigo',tribe:'No Muerto',text:'Al eliminarlo: +5 XP y +2 Oro.',killReward:{g:2,x:5}};
+defs.elfooscuro={n:'Elfo Oscuro',icon:'🏹',g:3,x:3,cost:7,kind:'Enemigo',text:'Al eliminarlo: +5 Oro y +2 XP.',killReward:{g:5,x:2}};
+defs.sanguinario={n:'Vampiro Ancestral',icon:'🧛',g:1,x:7,cost:11,kind:'Enemigo',tribe:'No Muerto',text:'Al eliminarlo: +8 XP y +3 Oro.',killReward:{g:3,x:8}};
+defs.liche={n:'Liche Menor',icon:'💀',g:4,x:8,cost:10,kind:'Enemigo',tribe:'No Muerto',text:'Gran recompensa de Oro y XP.'};
+// Las recompensas base se muestran en las estadísticas, no como habilidad.
+for(const id of ["aventurero", "aprendiz", "rata", "goblin", "banquera", "noble", "ratagigante", "goblinavaro", "mimic", "dragon", "esqueleto", "zombi", "liche"]){defs[id].text=''}
+const SOLO_BANNED=new Set(['ladron','hechicero','bruja','espectro','duende','oraculo']);
+const UNIQUE_CARDS=new Set(['jefegoblin','domador','hechicero','bruja','espectro','duende','oraculo','guardian','sanguinario']);const purchaseLimit=id=>UNIQUE_CARDS.has(id)?1:3;const marketIds=Object.keys(defs).filter(k=>defs[k].cost);let game=null;let uid=0;const $=id=>document.getElementById(id);function rand(n){return Math.floor(Math.random()*n)}function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}function instance(id){return {id,uid:++uid,active:true,ignored:false}}function p(){return game.players[game.current]}function log(s){game.logs.unshift(s);game.logs=game.logs.slice(0,70)}function openModal(title,body,buttons,extra=''){$('modalTitle').textContent=title;$('modalBody').textContent=body;$('modalExtra').innerHTML=extra;$('modalButtons').innerHTML='';for(let b of buttons){let btn=document.createElement('button');btn.textContent=b.label;btn.onclick=()=>{closeModal();b.fn()};$('modalButtons').appendChild(btn)}$('modal').classList.remove('hidden')}function closeModal(){$('modal').classList.add('hidden')}
+const SOLO_LEVELS={easy:{name:'Fácil',xp:100,rounds:15},medium:{name:'Medio',xp:200,rounds:10},hard:{name:'Difícil',xp:500,rounds:15}};
+let selectedSoloLevel='easy';function chooseSoloLevel(level){if(!SOLO_LEVELS[level])return;selectedSoloLevel=level;document.querySelectorAll('[data-solo-level]').forEach(b=>b.classList.toggle('selected',b.dataset.soloLevel===level))}
+function soloTarget(){return game&&game.solo?game.soloGoal:100}function soloMaxRounds(){return game&&game.solo?game.soloRounds:15}
+let selectedPlayerCount=2;function choosePlayerCount(n){selectedPlayerCount=n;document.querySelectorAll('.player-choice').forEach(el=>{const active=Number(el.dataset.count)===n;el.classList.toggle('selected',active);el.setAttribute('aria-pressed',String(active))});renderNameInputs();$('soloDifficulty').classList.toggle('hidden',n!==1)}function renderNameInputs(){const box=$('playerNameInputs');const previous=[...box.querySelectorAll('input')].map(x=>x.value);box.innerHTML=Array.from({length:selectedPlayerCount},(_,i)=>`<label class="name-entry"><span>JUGADOR ${i+1}</span><input maxlength="22" autocomplete="off" placeholder="Jugador ${i+1}" value=""></label>`).join('');[...box.querySelectorAll('input')].forEach((x,i)=>{x.value=previous[i]||''})}function startGame(){let n=selectedPlayerCount;const playerNames=[...$('playerNameInputs').querySelectorAll('input')].map((el,i)=>el.value.trim().slice(0,22)||'Jugador '+(i+1));game={solo:n===1,soloDifficulty:n===1?selectedSoloLevel:null,soloGoal:n===1?SOLO_LEVELS[selectedSoloLevel].xp:100,soloRounds:n===1?SOLO_LEVELS[selectedSoloLevel].rounds:15,players:Array.from({length:n},(_,i)=>({name:playerNames[i],gold:0,xp:0,purchases:{},deck:START.flatMap(([id,c])=>Array.from({length:c},()=>instance(id))),round:0,curses:[]})),current:0,phase:'explore',round:1,draw:[],shown:[],discard:[],tempG:0,tempX:0,logs:[],pending:[],protected:0,chain:0,trios:new Set(),endReason:'',winner:null,autoBank:false,boardTarget:null,shopFilter:'Todos'};$('startScreen').classList.add('hidden');$('gameScreen').classList.remove('hidden');startTurn()}
+renderNameInputs();function startTurn(){let q=p();q.round++;game.phase='explore';game.draw=shuffle(q.deck.map(c=>({...c,active:true,ignored:false})));game.shown=[];game.lastRevealedUid=null;game.discard=[];game.tempG=0;game.tempX=0;game.pending=[];game.protected=0;game.chain=0;game.trios=new Set();game.endReason='';game.autoBank=false;log('🎲 '+q.name+' comienza su ronda '+q.round+'.');render();showTurnIntro()}
+function showTurnIntro(){
+ const q=p();
+ $('turnIntroName').textContent=q.name;
+ $('turnIntroRound').textContent=game.solo?'EXPEDICIÓN '+q.round+' DE '+soloMaxRounds():'RONDA '+q.round;
+ const curseBox=$('turnIntroCurses');curseBox.classList.toggle('hidden',!q.curses.length);curseBox.innerHTML=q.curses.length?'<strong>🔮 MALDICIONES ACTIVAS</strong>'+q.curses.map(c=>'<span>⚠ '+escapeHTML(curseName(c))+'</span>').join(''):'';
+ $('turnIntroOverlay').classList.remove('hidden');
+ const btn=$('turnIntroStartButton');if(btn)btn.focus();
+}
+function beginCurrentTurn(){
+ if(!game||game.phase!=='explore'||$('turnIntroOverlay').classList.contains('hidden'))return;
+ $('turnIntroOverlay').classList.add('hidden');
+ playSound('reveal');
+ applyStartCurses();
+}
+function enemies(){return game.shown.filter(c=>c.active&&defs[c.id].kind==='Enemigo'&&!c.ignored)}function allies(){return game.shown.filter(c=>c.active&&defs[c.id].kind==='Aliado')}function addGold(v){game.tempG=Math.max(0,game.tempG+v)}function addXp(v){game.tempX=Math.max(0,game.tempX+v)}function retire(c,defeated=false){playElimination(c);c.active=false;game.discard.push(c);let d=defs[c.id];game.tempG=Math.max(0,game.tempG-d.g);game.tempX=Math.max(0,game.tempX-d.x);if(defeated&&d.killReward){addGold(d.killReward.g||0);addXp(d.killReward.x||0);log('⚔️ ¡'+d.n+' derrotado! Botín: +'+(d.killReward.g||0)+' Oro y +'+(d.killReward.x||0)+' XP.')}else log('↩️ '+d.n+' sale de la zona activa.') }
+function playElimination(c){
+ const target=document.querySelector('#tableau .card[data-uid="'+c.uid+'"]');
+ if(!target)return;
+ const rect=target.getBoundingClientRect(),undead=defs[c.id].tribe==='No Muerto';
+ const ghost=target.cloneNode(true);
+ ghost.classList.remove('dim','deal-new');
+ ghost.classList.add('elimination-ghost',undead?'banish-effect':'slash-effect');
+ Object.assign(ghost.style,{left:rect.left+'px',top:rect.top+'px',width:rect.width+'px',height:rect.height+'px'});
+ document.body.appendChild(ghost);
+ const fx=document.createElement('div');
+ fx.className='elimination-fx '+(undead?'holy-fx':'blade-fx');
+ Object.assign(fx.style,{left:rect.left+'px',top:rect.top+'px',width:rect.width+'px',height:rect.height+'px'});
+ fx.innerHTML=undead?'<span class="holy-symbol">✧ ✦ ✧</span>':'<span class="blade-streak"></span><span class="blade-streak second"></span>';
+ document.body.appendChild(fx);
+ playSound(undead?'banish':'slash');
+ setTimeout(()=>{ghost.remove();fx.remove()},850);
+}
+function checkTrios(){let counts={};for(let c of game.shown.filter(c=>c.active)){counts[c.id]=(counts[c.id]||0)+1}for(let [id,count] of Object.entries(counts)){let n=Math.floor(count/3);for(let k=1;k<=n;k++){let key=id+':'+k;if(game.trios.has(key))continue;game.trios.add(key);let extraG=0,extraX=0;if(id==='mercader'||id==='goblinavaro'||id==='goblin'||id==='jefegoblin')extraG=10;else if(id==='erudita')extraX=12;else if(id==='rata'||id==='ratagigante')extraX=6;else if(id==='dragon')extraX=25;else if(id==='picara'){for(let e of [...enemies()])retire(e,true)}else extraX=3;addGold(extraG);addXp(extraX);log('🎉 ¡Trío de '+defs[id].n+'! +'+extraG+' Oro / +'+extraX+' XP.')}}}
+function processNext(){if(game.phase!=='explore')return;if(game.pending.length){let task=game.pending.shift();task();return}checkTrios();if(enemies().length>=3){game.phase='shop';game.endReason='💥 ¡Tres enemigos! Pierdes los recursos de esta ronda.';game.tempG=0;game.tempX=0;const lost=Math.min(10,p().xp);p().xp-=lost;game.endReason='💀 Tres enemigos: pierdes las recompensas y '+lost+' XP acumulados.';log(game.endReason);render();showOutcome(false,0,-lost);return}if(game.draw.length===0){bank(true,true);return}if(game.autoBank){bank(true,false);return}render()}
+function enemyEntrance(c){
+ if(!c||defs[c.id].kind!=='Enemigo')return;
+ const card=document.querySelector('#tableau .card[data-uid="'+c.uid+'"]');
+ if(card){card.classList.remove('enemy-spawn');void card.offsetWidth;card.classList.add('enemy-spawn');
+  const warning=document.createElement('span');warning.className='enemy-spawn-warning';warning.textContent=c.ignored?'🛡':'☠';warning.setAttribute('aria-label',c.ignored?'Protegido':'Enemigo peligroso');card.appendChild(warning);
+  setTimeout(()=>warning.remove(),1050);
+ }
+ const flash=document.createElement('div');flash.className='enemy-screen-flash';document.body.appendChild(flash);
+ setTimeout(()=>flash.remove(),600);
+}
+function scheduleEnemyEntrance(c){if(defs[c.id].kind==='Enemigo')requestAnimationFrame(()=>requestAnimationFrame(()=>enemyEntrance(c)))}
+function reveal(){if(!game||game.phase!=='explore'||!$('turnIntroOverlay').classList.contains('hidden')||game.pending.length||game.boardTarget)return;if(!game.draw.length){bank();return}let c=game.draw.shift();let d=defs[c.id];playSound(d.kind==='Enemigo'?'enemy':'reveal');game.shown.push(c);game.lastRevealedUid=c.uid;if(d.kind==='Enemigo'&&game.protected>0){c.ignored=true;game.protected--;log('🛡️ '+d.n+' no cuenta como enemigo gracias al Domador.')}addGold(d.g);addXp(d.x);log((d.kind==='Enemigo'?'☠️ ':'🐾 ')+d.n+' (+ '+d.g+' Oro / '+d.x+' XP).');if(d.effect)game.pending.push(()=>applyEffect(c,d));processNext();scheduleEnemyEntrance(c)}
+function targetPrompt(title,filter,cb,skipText='Continuar'){
+ const candidates=game.shown.filter(c=>c.active&&filter(c));
+ if(!candidates.length){log('Sin objetivos válidos para '+title+'.');processNext();return}
+ game.boardTarget={title,valid:new Set(candidates.map(c=>c.uid)),callback:cb};
+ render();
+}
+function selectBoardTarget(uid){
+ if(!game||!game.boardTarget||game.phase!=='explore')return;
+ const t=game.boardTarget;if(!t.valid.has(uid))return;
+ const c=game.shown.find(v=>v.uid===uid&&v.active);if(!c)return;
+ game.boardTarget=null;
+ const result=t.callback(c);
+ if(result!==false)processNext();
+}
+function skipBoardTarget(){
+ if(!game||!game.boardTarget)return;
+ game.boardTarget=null;processNext();
+}
+$('tableau').addEventListener('click',e=>{const card=e.target.closest('.card[data-uid]');if(card)selectBoardTarget(Number(card.dataset.uid))});
+$('tableau').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const card=e.target.closest('.card[data-uid]');if(card&&game&&game.boardTarget){e.preventDefault();selectBoardTarget(Number(card.dataset.uid))}}});
+function pickRival(kind){if(game.solo){processNext();return;}
+ const rivals=game.players.map((q,i)=>({q,i})).filter(v=>v.i!==game.current);
+ const html='<div class="rival-choice">'+rivals.map(v=>`<button onclick="chooseCurseRival(${v.i},'${kind}')"><span class="rival-cat">🐱</span><strong>${escapeHTML(v.q.name)}</strong></button>`).join('')+'</div>';
+ openModal('🎯 Elegir rival','Selecciona el gato al que aplicarás la maldición.',[{label:'Omitir',fn:processNext}],html);
+}
+function chooseCurseRival(i,kind){if(!game||i===game.current||!game.players[i])return;game.players[i].curses.push(kind);log('🪄 '+p().name+' maldice a '+game.players[i].name+'.');closeModal();processNext()}
+
+function curseName(kind){return ({draw:'Revelar 1 extra al retirarse',gold:'−3 Oro al cobrar',xp:'−3 XP al cobrar',start:'Revelación inicial obligatoria',enemy:'Enemigo temporal al empezar'})[kind]||kind}
+let audioCtx=null,soundEnabled=true;
+function toggleSound(){soundEnabled=!soundEnabled;$('soundBtn').textContent=soundEnabled?'🔊 Sonido':'🔇 Silencio';if(soundEnabled)playSound('reveal')}
+function playSound(kind){
+ if(!soundEnabled)return;
+ try{
+ const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+ if(!audioCtx)audioCtx=new AC();if(audioCtx.state==='suspended')audioCtx.resume();
+ const now=audioCtx.currentTime;
+ const patterns={reveal:[[510,.07,'sine',.065],[680,.09,'sine',.045]],enemy:[[260,.14,'sawtooth',.09],[190,.22,'triangle',.07]],win:[[523,.11,'sine',.10],[659,.12,'sine',.10],[784,.13,'sine',.11],[1047,.3,'sine',.10]],lose:[[392,.13,'triangle',.10],[310,.16,'triangle',.10],[196,.35,'sawtooth',.08]],buy:[[740,.07,'sine',.07],[920,.12,'sine',.07]],gameover:[[392,.21,'triangle',.12],[349,.22,'triangle',.13],[294,.24,'sine',.14],[220,.35,'sine',.16],[147,.6,'triangle',.12]],slash:[[850,.08,'sawtooth',.07],[340,.18,'triangle',.07]],banish:[[600,.12,'sine',.07],[900,.17,'sine',.08],[1150,.2,'sine',.06]],shield:[[880,.09,'sine',.08],[1140,.13,'triangle',.09],[740,.22,'sine',.06]],victory:[[392,.13,'triangle',.10],[523,.13,'sine',.12],[659,.13,'sine',.12],[784,.15,'triangle',.13],[1047,.19,'sine',.14],[1319,.19,'sine',.14],[1568,.23,'triangle',.14],[2093,.50,'sine',.16]],complete:[[392,.10,'triangle',.10],[523,.12,'sine',.11],[659,.12,'sine',.11],[784,.14,'sine',.12],[988,.16,'sine',.12],[1175,.20,'sine',.12],[1568,.48,'triangle',.13]]};
+ let t=now;for(const [freq,dur,wave,vol] of (patterns[kind]||patterns.reveal)){
+ const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=wave;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(vol,t+.012);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+dur+.02);t+=dur*.83;
+ }
+ }catch(e){}
+}
+function animateNumber(el,value){
+ const end=Math.abs(value),start=performance.now(),duration=850;
+ const sign=value<0?'−':'+';el.textContent=sign+'0';
+ function tick(now){const k=Math.min(1,(now-start)/duration);const eased=1-Math.pow(1-k,3);el.textContent=sign+Math.round(end*eased);if(k<1)requestAnimationFrame(tick)}
+ requestAnimationFrame(tick);
+}
+function showOutcome(success,gold,xp,completed=false){
+ $('outcomeDialog').classList.toggle('failure',!success);
+ $('outcomeIcon').textContent=success?'🏕️':'💀';
+ $('outcomeTitle').textContent=success?(completed?'¡Expedición completada!':'¡Sobreviviste a la expedición!'):'¡Moriste en la expedición!';
+ $('outcomeDescription').textContent=success?(completed?'¡Revelaste todas las cartas! Recibes 10 XP extra además de las recompensas.':'Te retiraste a salvo con tus recompensas.'):'Tres enemigos activos te derrotaron: pierdes lo ganado en esta ronda y hasta 10 XP de tu total.';
+ $('outcomeTotal').textContent='Total de '+p().name+': '+p().gold+' Oro · '+p().xp+'/'+soloTarget()+' XP';
+ const lastSolo=game.solo&&p().round>=soloMaxRounds();
+ const buttons=$('outcomeDialog').querySelectorAll('.outcome-actions button');
+ if(buttons[0])buttons[0].textContent=lastSolo?'🏁 Ver resultado final':'🏪 Ir al mercado';
+ if(buttons[1]){buttons[1].textContent=lastSolo?'🏁 Finalizar aventura':'Terminar turno →';buttons[1].classList.toggle('hidden',lastSolo)}
+ $('outcomeOverlay').classList.remove('hidden');
+ animateNumber($('outcomeGold'),gold);animateNumber($('outcomeXp'),xp);
+ playSound(!success?'lose':completed?'complete':'win');
+}
+function closeOutcome(){$('outcomeOverlay').classList.add('hidden')}
+function finishTurnFromOutcome(){closeOutcome();nextPlayer()}
+function openShopFromOutcome(){closeOutcome();if(game.solo&&p().round>=soloMaxRounds()){showSoloFinal();return}showShop()}
+function showShop(){if(!game||game.phase!=='shop')return;if(game.solo&&p().round>=soloMaxRounds()){showSoloFinal();return;}$('shopOverlay').classList.remove('hidden');renderMarket()}
+function renderMarket(){if(!game)return;const q=p();$('shopGold').textContent=q.gold;const filters=game.solo?['Todos','Aliados','Enemigos','No Muertos']:['Todos','Aliados','Enemigos','No Muertos','Maldiciones'];$('shopTabs').innerHTML=filters.map(f=>`<button class="${game.shopFilter===f?'selected':''}" onclick="setShopFilter('${f}')">${f}</button>`).join('');let ids=marketIds.filter(id=>{if(game.solo&&SOLO_BANNED.has(id))return false;const d=defs[id];return game.shopFilter==='Todos'||(game.shopFilter==='Aliados'&&d.kind==='Aliado')||(game.shopFilter==='Enemigos'&&d.kind==='Enemigo')||(game.shopFilter==='No Muertos'&&d.tribe==='No Muerto')||(game.shopFilter==='Maldiciones'&&['curseDraw','curseGold','curseXp','curseStart','curseEnemy','cleanse'].includes(d.effect))});$('market').innerHTML=ids.map(id=>{const d=defs[id];return `<div class="market-item" data-market-id="${id}" data-can-buy="${q.gold>=d.cost&&(q.purchases[id]||0)<purchaseLimit(id)?'1':'0'}" onclick="marketCardTap(event,'${id}')">${cardHtml(instancePreview(id))}<div class="price">💰 Coste: ${d.cost}</div><div class="stock-info">${UNIQUE_CARDS.has(id)?'✦ ÚNICA · ':'Límite · '}${q.purchases[id]||0}/${purchaseLimit(id)}</div><button class="buy" ${q.gold<d.cost||(q.purchases[id]||0)>=purchaseLimit(id)?'disabled':''} onclick="event.stopPropagation();buy('${id}')">${(q.purchases[id]||0)>=purchaseLimit(id)?'Límite alcanzado':'Comprar'}</button></div>`}).join('')}
+function marketCardTap(event,id){
+ if(event.target.closest('button')||event.target.closest('a'))return;
+ buy(id);
+}
+function marketPurchaseFx(id,cost){
+ const item=[...document.querySelectorAll('#market .market-item')].find(el=>el.dataset.marketId===id);
+ if(!item)return;
+ const fx=document.createElement('div');fx.className='market-spend-fx';fx.innerHTML='<span class="market-spend-coin">✦</span><strong>−'+cost+' ORO</strong>';
+ fx.setAttribute('aria-label','Gastaste '+cost+' de oro');item.appendChild(fx);
+ item.classList.remove('market-just-bought');void item.offsetWidth;item.classList.add('market-just-bought');
+ setTimeout(()=>{fx.remove();item.classList.remove('market-just-bought')},1050);
+}
+function setShopFilter(f){game.shopFilter=f;renderMarket()}
+function applyStartCurses(){
+ const q=p();const start=q.curses.filter(c=>c==='start'||c==='enemy');
+ q.curses=q.curses.filter(c=>c!=='start'&&c!=='enemy');
+ for(const curse of start){
+  if(curse==='enemy'){game.draw.unshift(instance('rata'));log('👺 Maldición: Rata temporal añadida al inicio de esta ronda.')}
+  if(curse==='start'){game.pending.push(()=>{log('🃏 Maldición: revelación inicial obligatoria.');revealForced()})}
+ }
+ if(game.pending.length){const task=game.pending.shift();task()}
+}
+function applyEffect(c,d){switch(d.effect){case 'curseDraw':pickRival('draw');break;case 'curseGold':pickRival('gold');break;case 'curseXp':pickRival('xp');break;case 'curseStart':pickRival('start');break;case 'curseEnemy':pickRival('enemy');break;case 'cleanse':{const options=game.players.flatMap((player,pi)=>player.curses.map((curse,ci)=>({label:player.name+' · '+curseName(curse),fn:()=>{player.curses.splice(ci,1);log('🌞 '+p().name+' elimina una maldición de '+player.name+'.');processNext()}})));if(options.length){openModal('🌞 Guardián del Alba','Elige cualquier maldición activa para eliminarla.',options.concat([{label:'No eliminar',fn:processNext}]));}else{log('🌞 No hay maldiciones activas.');processNext();}break}case 'kill':case 'kill2':{let count=d.effect==='kill2'?2:1;let go=()=>{if(count<=0){processNext();return}targetPrompt('Eliminar enemigo',v=>defs[v.id].kind==='Enemigo',v=>{retire(v,true);count--;go();return false},'No eliminar más')};go();break}case 'hunt':targetPrompt('Cazar Bestia',v=>v.id==='rata'||v.id==='ratagigante',v=>retire(v,true));break;case 'exorcise':targetPrompt('Exorcizar No Muerto',v=>defs[v.id].kind==='Enemigo'&&defs[v.id].tribe==='No Muerto',v=>{retire(v,true);addXp(2)});break;case 'bottom':targetPrompt('Mover al fondo',v=>v.uid!==c.uid,v=>{retire(v);game.draw.push({...v,active:true});});break;case 'reshuffle':{game.draw=shuffle(game.draw);log('🌀 El Barajador Arcano mezcla las '+game.draw.length+' cartas restantes.');playSound('reveal');processNext();break}case 'peek':{if(game.draw.length>=2){openModal('🧭 Cartógrafa','Toca la carta que quieres revelar primero.',[],`<div class="peek-choice">${game.draw.slice(0,2).map((v,i)=>`<button class="peek-card-choice" onclick="choosePeek(${i})">${cardHtml(v)}<span>Revelar primero</span></button>`).join('')}</div>`)}else processNext();break}case 'draw2':{if(game.chain<6){game.chain+=2;game.pending.unshift(()=>{if(game.draw.length)revealForced();else processNext()},()=>{if(game.draw.length)revealForced();else processNext()})}else log('Límite de invocaciones alcanzado.');processNext();break}case 'steal':{if(game.solo){processNext();break}let target=game.players[(game.current+1)%game.players.length];let stolen=Math.min(2,target.gold);target.gold-=stolen;addGold(stolen);log('💰 Robas '+stolen+' Oro a '+target.name+'.');processNext();break}case 'tax':addGold(enemies().length*2);processNext();break;case 'bard':addXp(Math.min(8,allies().length*2));processNext();break;case 'captain':{let counts={};for(let a of allies())counts[a.id]=(counts[a.id]||0)+1;if(Object.values(counts).some(v=>v>=3)){addXp(8);log('⚔️ Capitán: +8 XP por trío aliado.')}processNext();break}case 'goblinboss':if(game.shown.filter(v=>v.active&&defs[v.id].tribe==='Goblin').length>=3){addGold(10);log('👹 Pandilla: +10 Oro.')}processNext();break;case 'tame':game.protected+=2;log('🛡️ Los próximos 2 enemigos no contarán para el límite.');processNext();break;default:processNext()}}
+function choosePeek(i){if(!game||game.draw.length<2)return;if(i===1)[game.draw[0],game.draw[1]]=[game.draw[1],game.draw[0]];closeModal();log('🧭 Cartógrafa: eliges la próxima carta.');processNext()}
+function revealForced(){if(game.phase!=='explore')return;if(!game.draw.length){processNext();return}let c=game.draw.shift(),d=defs[c.id];playSound(d.kind==='Enemigo'?'enemy':'reveal');game.shown.push(c);game.lastRevealedUid=c.uid;if(d.kind==='Enemigo'&&game.protected>0){c.ignored=true;game.protected--;playSound('shield')}addGold(d.g);addXp(d.x);log('🔮 Invocada: '+d.n);if(d.effect&&game.chain<6)game.pending.unshift(()=>applyEffect(c,d));processNext();scheduleEnemyEntrance(c)}
+function bank(forced=false,completed=false){
+ if(game.phase!=='explore'||!$('turnIntroOverlay').classList.contains('hidden')||game.boardTarget)return;
+ const q=p();
+ if(!forced){
+  const idx=q.curses.indexOf('draw');
+  if(idx!==-1 && game.draw.length){
+   q.curses.splice(idx,1);game.autoBank=true;
+   log('🧙 Maldición: debes revelar una carta adicional antes de cobrar.');
+   revealForced();return;
+  }
+ }
+ game.autoBank=false;
+ if(completed){addXp(10);log('🏆 Expedición completa: +10 XP de bonificación.');}
+ for(const kind of ['gold','xp']){
+  const idx=q.curses.indexOf(kind);
+  if(idx!==-1){
+   q.curses.splice(idx,1);
+   if(kind==='gold')addGold(-3);else addXp(-3);
+   log('🪄 Penalización al cobrar: '+curseName(kind));
+  }
+ }
+ q.gold+=game.tempG;q.xp+=game.tempX;
+ log('🏕️ '+q.name+' cobra '+game.tempG+' Oro y '+game.tempX+' XP.');
+ game.phase='shop';game.endReason=(completed?'¡Expedición completa! +10 XP de bonificación. ':'Retirada a salvo. ')+'Recompensas: '+game.tempG+' Oro y '+game.tempX+' XP.';
+ if(q.xp>=soloTarget()){game.phase='won';game.winner=q.name;render();showVictory();return;}
+ render();if(game.phase==='shop')showOutcome(true,game.tempG,game.tempX,completed);
+}
+function showSoloFinal(){
+ $('outcomeOverlay').classList.add('hidden');$('shopOverlay').classList.add('hidden');$('modal').classList.add('hidden');
+ const q=p();
+ if(q.xp>=soloTarget()){game.phase='won';game.winner=q.name;render();showVictory();return;}
+ game.phase='solo-failed';
+ $('soloGameOverPlayer').textContent=q.name+' · '+SOLO_LEVELS[game.soloDifficulty].name;$('soloGameOverOverlay').querySelector('.game-over-message').textContent='Se agotaron tus '+soloMaxRounds()+' expediciones sin alcanzar los '+soloTarget()+' XP.';
+ $('soloGameOverXp').textContent=q.xp+' / '+soloTarget()+' XP';
+ $('soloGameOverGold').textContent=q.gold;$('soloGameOverRounds').textContent=q.round+' / '+soloMaxRounds();
+ $('victoryOverlay').classList.add('hidden');
+ $('soloGameOverOverlay').classList.remove('hidden');
+ playSound('gameover');
+}
+function showVictory(){
+ $('outcomeOverlay').classList.add('hidden');$('shopOverlay').classList.add('hidden');$('modal').classList.add('hidden');
+ $('victoryWinner').textContent=p().name+(game.solo?' · '+SOLO_LEVELS[game.soloDifficulty].name:'');
+ $('victoryXp').textContent=p().xp+' XP';
+ $('victoryGold').textContent=p().gold;
+ $('victoryRounds').textContent=game.solo?p().round+' / '+soloMaxRounds():game.round;
+ $('victoryOverlay').classList.remove('hidden');
+ playSound('victory');
+}
+function buy(id){if(game.phase!=='shop'||!marketIds.includes(id)||(game.solo&&SOLO_BANNED.has(id)))return;let q=p(),d=defs[id];if(q.gold<d.cost||(q.purchases[id]||0)>=purchaseLimit(id))return;q.gold-=d.cost;q.purchases[id]=(q.purchases[id]||0)+1;q.deck.push(instance(id));playSound('buy');log('🛍️ '+q.name+' compra '+d.n+' por '+d.cost+' Oro.');render();renderMarket();marketPurchaseFx(id,d.cost)}
+function nextPlayer(){if(game.phase!=='shop')return;if(game.solo&&p().round>=soloMaxRounds()){showSoloFinal();return;}$('outcomeOverlay').classList.add('hidden');$('shopOverlay').classList.add('hidden');game.current=(game.current+1)%game.players.length;if(game.current===0)game.round++;startTurn()}
+function cardHtml(c){
+ const d=defs[c.id],enemy=d.kind==='Enemigo',undead=d.tribe==='No Muerto';
+ const hue=undead?'#9c92db':enemy?'#de8077':'#76c7b4';
+ const motifs=['✦','◆','✧','✣'];
+ const code=[...c.id].reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
+ const glyph=motifs[code%motifs.length];
+ return `<div data-uid="${c.uid||0}" class="card ${game&&game.phase==='explore'&&c.uid===game.lastRevealedUid?'deal-new':''} ${enemy?'enemy':''} ${undead?'undead':''} ${!d.text?'no-skill':''} ${c.active?'':'dim'} ${c.ignored?'bonus tamed-card':''}" style="--card-accent:${hue}">
+ ${c.ignored?`<div class="tamed-shield" aria-label="Protegido por el Domador"><span>🛡</span><small>DOMADO</small></div>`:``}<div class="card-top"><span class="card-class">${enemy?'BESTIARIO':'COMPAÑERO'}</span><span class="card-star">${glyph}</span></div>
+ <div class="card-art"><div class="art-halo"></div><div class="art-runes">✧　✦　✧</div><div class="art-character">${d.icon}</div><div class="art-ground"></div></div>
+ <div class="card-name">${d.n}</div>
+ <div class="card-type">${undead?'☠ NO MUERTO':d.tribe?d.tribe.toUpperCase():d.kind.toUpperCase()}${c.ignored?' · PROTEGIDO':''}</div>
+ <div class="card-value"><span><i class="gold-coin" aria-label="Oro">G</i> <b>${d.g}</b></span><span>✦ <b>${d.x}</b></span></div>
+ ${d.text?`<div class="card-skill">${d.text}</div>`:''}
+ <div class="card-foot"><span>DC · PARTY DUNGEON</span><span>✦</span></div>
+ </div>`;
+}
+function escapeHTML(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function render(){if(!game)return;let q=p();$('players').innerHTML=game.players.map((a,i)=>`<div class="player ${i===game.current?'active':''}"><strong>${escapeHTML(a.name)}${i===game.current?' ◀':''}</strong><small>⭐ ${a.xp}/${soloTarget()} XP &nbsp; 💰 ${a.gold} Oro</small><div class="meter"><div style="width:${Math.min(100,100*a.xp/soloTarget())}%"></div></div>${a.curses.length?`<div class="player-curse-flag">🔮 ${a.curses.length} maldición${a.curses.length===1?'':'es'}: ${a.curses.map(curseName).join(' · ')}</div>`:''}</div>`).join('');$('turnTitle').textContent=q.name+' · '+({explore:'Exploración',shop:'Mercado',busted:'Incursión fallida',won:'¡Victoria!'}[game.phase]);$('roundBadge').textContent=game.solo?'Expedición '+q.round+' / '+soloMaxRounds():'Ronda global '+game.round;$('phaseLabel').textContent=game.phase==='explore'?'Explorando':game.phase==='shop'?'Comprando':game.phase==='busted'?'Derrota de ronda':'Victoria';$('gold').textContent=q.gold;$('xp').textContent=q.xp;$('xpbar').style.width=Math.min(100,100*q.xp/soloTarget())+'%';$('deckcount').textContent=q.deck.length;$('enemycount').textContent=enemies().length+' / 3';$('tempGold').textContent=game.tempG;$('tempXp').textContent=game.tempX;$('remaining').textContent=game.draw.length;$('tableau').innerHTML=game.shown.length?game.shown.filter(c=>c.active).map(c=>{
+ let html=cardHtml(c);if(game.boardTarget&&game.boardTarget.valid.has(c.uid))html=html.replace('class="card ', 'class="card board-target-valid ').replace('data-uid="'+c.uid+'"','data-uid="'+c.uid+'" role="button" tabindex="0" aria-label="Seleccionar '+escapeHTML(defs[c.id].n)+'"');
+ return html;
+}).join(''):'<p class="muted">Aún no se revelan cartas.</p>';
+let banner=$('boardTargetBanner');if(!banner){banner=document.createElement('div');banner.id='boardTargetBanner';$('tableau').parentNode.insertBefore(banner,$('tableau'))}
+banner.innerHTML=game.boardTarget?'<div class="board-target-banner"><span>🎯 '+escapeHTML(game.boardTarget.title)+' — toca una carta resaltada</span><button type="button" onclick="skipBoardTarget()">Omitir</button></div>':'';
+$('statusText').textContent=game.phase==='shop'?game.endReason:game.phase==='busted'?'Pierdes las ganancias de esta ronda.':game.phase==='explore'?'Revela otra o retírate.':'';$('revealBtn').disabled=game.phase!=='explore'||!game.draw.length||!!game.boardTarget;$('bankBtn').disabled=game.phase!=='explore'||!game.shown.length||!!game.boardTarget;$('openMarketBtn').classList.toggle('hidden',game.phase!=='shop');$('curseIndicators').innerHTML=q.curses.length?'<div class="curse-warning"><div class="curse-warning-title">⚠ MALDICIONES ACTIVAS SOBRE '+escapeHTML(q.name).toUpperCase()+'</div><div class="curse-warning-items">'+q.curses.map(c=>'<span class="curse-tag">🔮 '+curseName(c)+'</span>').join('')+'</div></div>':''}
+function instancePreview(id){return{id,active:true,ignored:false}}function showRules(){openModal('📖 Reglas rápidas','Cada jugador inicia con 8 cartas: 4 Aventureros, 1 Aprendiz, 2 Ratas y 1 Goblin. Revela una carta cada vez: si tienes 3 enemigos activos, pierdes el Oro y XP de la ronda; si te retiras antes, cobras ambos. Al terminar cada ronda se abre el mercado en una ventana central. Los enemigos mágicos pueden maldecir a otros jugadores: forzar robos adicionales, quitar recursos o agregar enemigos temporales. Completar todas las cartas da +10 XP; perder por tres enemigos resta hasta 10 XP acumulados. En multijugador gana el primero en llegar a 100 XP. En solitario elige Fácil (100 XP en 15 turnos), Medio (200 XP en 10 turnos) o Difícil (500 XP en 15 turnos). Las habilidades se activan al revelar la carta. Los tríos dan bonificaciones. Las cartas retiradas por habilidades no se destruyen permanentemente.',[{label:'Entendido',fn:()=>{}}])}function resetConfirm(){openModal('¿Nueva partida?','Se perderá la partida actual.',[{label:'Cancelar',fn:()=>{}},{label:'Reiniciar',fn:()=>location.reload()}])}
+</script></body></html>
